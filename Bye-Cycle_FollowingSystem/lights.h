@@ -8,7 +8,7 @@ class Lights {
     uint8_t location;
     uint8_t* port = NULL;
     unsigned long timeToBurn;
-    unsigned long waitTill;
+    unsigned long waitTill = -1;
 
 
   public:
@@ -20,17 +20,17 @@ class Lights {
     }
 
     //Functions
-    void Burn(unsigned long wait) {
-      timeToBurn = millis() + wait + delay;
-      waitTill = 0;
-    }
-
     void Burn(unsigned long wait, unsigned long delay) {
       timeToBurn = millis() + wait + delay;
-      waitTill = millis() + delay;
+      if (delay + millis() <= waitTill) {
+        waitTill = delay + millis();
+      }
     }
 
     void CheckState() {
+      if (!(*port & (1 << location)) && millis() > waitTill) {
+        waitTill = -1;
+      }
       if (millis() < timeToBurn && millis() >= waitTill) {
         *port |= (1 << location);
       } else {

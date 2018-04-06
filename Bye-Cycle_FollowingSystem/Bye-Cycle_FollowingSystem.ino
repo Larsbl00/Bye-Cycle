@@ -18,28 +18,28 @@ void loop() {
     Serial.println(readChar);
     switch (readChar) {
       case 'a':
-        lights[0].Burn(1000);
+        lights[0].Burn(1000, 0);
         break;
       case 'b':
-        lights[1].Burn(1000);
+        lights[1].Burn(1000, 0);
         break;
       case 'c':
-        lights[2].Burn(1000);
+        lights[2].Burn(1000, 0);
         break;
       case 'd':
-        lights[3].Burn(1000);
+        lights[3].Burn(1000, 0);
         break;
       case 'e':
-        lights[0].Burn(4000);
-        lights[1].Burn(3000);
-        lights[2].Burn(2000);
-        lights[3].Burn(1000);
+        lights[0].Burn(4000, 0);
+        lights[1].Burn(3000, 0);
+        lights[2].Burn(2000, 0);
+        lights[3].Burn(1000, 0);
         break;
       case 'f':
-        FollowSequence(lights, lightsSize, 'l', 10000);
+        FollowSequence(lights, lightsSize, 'l', 1000);
         break;
       case 'g':
-        FollowSequence(lights, lightsSize, 'r', 10000);
+        FollowSequence(lights, lightsSize, 'r', 1000);
         break;
       case 'p':
         PrintLights(lights, lightsSize);

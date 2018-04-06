@@ -1,7 +1,13 @@
 #ifndef LDR_H
 #define LDR_H
 
-//Returns the analog value in a Value between 0-100
-int returnPercentage(int analogValue);
+
+#define hysteresis 20
+
+//Returns the average of the values of the given analogInput
+//
+//@param analogInput : This is the pin where the analog sensor is wired to
+//
+long returnAverage(byte analogInput);
 
 #endif
