@@ -3,25 +3,36 @@
 #include "lights.h"
 
 void PrintLights(Lights* lights, byte arraySize) {
-  if (lights != NULL){
+  if (lights != NULL) {
     for (int i = 0; i < arraySize; i++) {
-     lights[i].Print();
+      lights[i].Print();
     }
   }
 }
 
 void CheckLightArray(const Lights* lights, byte arraySize) {
-  if (lights != NULL){
+  if (lights != NULL) {
     for (int i = 0; i < arraySize; i++) {
-        lights[i].CheckState();
+      lights[i].CheckState();
     }
   }
 }
 
-void FlipArray(Lights* from, Lights* to, byte arraySize) {
-  if (from != NULL && to != NULL){
-    for (int i = arraySize; i > 0; i--) {
-        to[i-1] = from[arraySize -i];
-    }
+int FollowSequence(const Lights* lights, byte arraySize, char direction, unsigned long timeToComplete) {
+  if (lights != NULL) {
+    byte itterator = 0;
+    switch (direction) {
+    case 'l':
+      itterator = arraySize;
+      
+        break;
+      case 'r':
+
+        break;
+      default:
+        Serial.println("Your direction is invalid! Please use either 'l' or 'r'");
+          break;
+      }
+    } else return -1;
   }
-}
+

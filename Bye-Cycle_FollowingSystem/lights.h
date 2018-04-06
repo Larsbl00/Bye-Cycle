@@ -6,28 +6,35 @@
 class Lights {
   private:
     uint8_t location;
-    uint8_t* port = NULL;
+    volatile uint8_t* port = NULL;
     unsigned long timeToBurn;
+    unsigned long waitTill;
 
 
   public:
     //Constructor
-    Lights(uint8_t locationOnRegister, uint8_t* addressPort, uint8_t* registerLight) {
+    Lights(uint8_t locationOnRegister, volatile uint8_t* addressPort, volatile uint8_t* registerLight) {
       port = addressPort;
       location = locationOnRegister;
-      *registerLight |= (1<<location);
+      *registerLight |= (1 << location);
     }
 
     //Functions
     void Burn(unsigned long wait) {
       timeToBurn = millis() + wait;
+      waitTill = 0;
+    }
+
+    void Burn(unsigned long wait, unsigned long delay) {
+      timeToBurn = millis() + wait + delay;
+      waitTill = millis() + delay;
     }
 
     void CheckState() {
-      if (millis() < timeToBurn) {
-        *port |= (1<<location);
+      if (millis() < timeToBurn && millis() >= waitTill) {
+        *port |= (1 << location);
       } else {
-        *port &= ~(1<<location);
+        *port &= ~(1 << location);
       }
     }
 
@@ -35,24 +42,28 @@ class Lights {
       Serial.print("Location on register: ");
       Serial.print(location);
       Serial.print(", ");
-      Serial.print("Port: 0x");
-      Serial.print(*port, HEX);
+      Serial.print("Location: 0x");
+      Serial.print((int)&port, HEX);
       Serial.print(", ");
       Serial.print("Time to burn: ");
       Serial.print(timeToBurn);
+      Serial.print(", ");
+      long remaining = timeToBurn - millis();
+      if (remaining > 0) {
+        Serial.print("Time remaining: ");
+        Serial.print(remaining);
+      } else {
+        Serial.print("Time remaining: ");
+        Serial.print(0);
+      }
+      Serial.print(", ");
+      Serial.print("Wait for: ");
+      Serial.print(waitTill);
       Serial.println("");
     }
 };
 
 //Methods
-
-//Flips an array of Lights
-//
-//@param from: This is the array where it copies all entries from
-//@param to: This is the array where it puts the reversed order of from
-//@param arraySize: This defines the array size, so you don't go out of bounds
-//
-void FlipArray(Lights* from, Lights* to, byte arraySize);
 
 //Uses the Print methode on all lights in the array
 //
