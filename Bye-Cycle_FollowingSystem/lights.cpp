@@ -18,21 +18,27 @@ void CheckLightArray(const Lights* lights, byte arraySize) {
   }
 }
 
-int FollowSequence(const Lights* lights, byte arraySize, char direction, unsigned long timeToComplete) {
-  if (lights != NULL) {
-    byte itterator = 0;
-    switch (direction) {
-    case 'l':
-      itterator = arraySize;
-      
-        break;
-      case 'r':
 
-        break;
+int FollowSequence(const Lights* lights, byte arraySize, char directionOfLights, unsigned long timeToComplete) {
+  if (lights != NULL) {
+    switch (directionOfLights) {
+      case 'l':
+        for (int i = 0; i < arraySize; i++) {
+          lights[arraySize - (i+1)].Burn(timeToComplete, ((double)timeToComplete / arraySize) * i);
+        }
+        return 0;
+      case 'r':
+        for (int i = 0; i < arraySize; i++) {
+          lights[i].Burn(timeToComplete, ((double)timeToComplete / arraySize) * i);
+        }
+        return 0;
       default:
-        Serial.println("Your direction is invalid! Please use either 'l' or 'r'");
-          break;
-      }
-    } else return -1;
+        Serial.println("Your direction is invalid! Please use either 'l' or 'r' as your direction");
+        return -1;
+    }
+  } else {
+    Serial.println("Your array is refering to NULL");
+    return -1;
   }
+}
 

@@ -6,14 +6,14 @@
 class Lights {
   private:
     uint8_t location;
-    volatile uint8_t* port = NULL;
+    uint8_t* port = NULL;
     unsigned long timeToBurn;
     unsigned long waitTill;
 
 
   public:
     //Constructor
-    Lights(uint8_t locationOnRegister, volatile uint8_t* addressPort, volatile uint8_t* registerLight) {
+    Lights(uint8_t locationOnRegister, uint8_t* addressPort, uint8_t* registerLight) {
       port = addressPort;
       location = locationOnRegister;
       *registerLight |= (1 << location);
@@ -21,7 +21,7 @@ class Lights {
 
     //Functions
     void Burn(unsigned long wait) {
-      timeToBurn = millis() + wait;
+      timeToBurn = millis() + wait + delay;
       waitTill = 0;
     }
 
@@ -45,6 +45,13 @@ class Lights {
       Serial.print("Location: 0x");
       Serial.print((int)&port, HEX);
       Serial.print(", ");
+      Serial.print("Status: ");
+      if (*port & 1 << location) {
+        Serial.print("On");
+      } else {
+        Serial.print("Off");
+      }
+      Serial.print(", ");
       Serial.print("Time to burn: ");
       Serial.print(timeToBurn);
       Serial.print(", ");
@@ -63,7 +70,7 @@ class Lights {
     }
 };
 
-//Methods
+//Functions
 
 //Uses the Print methode on all lights in the array
 //
@@ -78,5 +85,14 @@ void PrintLights(Lights* lights, byte arraySize);
 //@param arraySize: This is the size of the array, so we don't go out of bounds
 //
 void CheckLightArray(const Lights* lights, byte arraySize);
+
+//Activates the lights in the order given by the direction
+//
+//@param lights : This is the array where it needs to turn the lights on
+//@param arraySize : This is the size of the array so you don't go out of bounds
+//@param direction : This is the char that indicates the direction of the lights
+//@param timeToComplete : this is the time that needed for the user to complete the distance between one module of this program
+//
+int FollowSequence(const Lights* lights, byte arraySize, char directionOfLights, unsigned long timeToComplete);
 
 #endif
