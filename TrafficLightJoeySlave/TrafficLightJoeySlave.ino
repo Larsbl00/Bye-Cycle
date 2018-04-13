@@ -11,14 +11,14 @@ void setup() {
   Serial.println("----------------------------------------------------");
   Serial.println("Serial is online");
 
-  start_connection();
-  Serial.println("----------------------------------------------------");
-  Serial.println("I2C started");
+
 
 }
 
-void loop() 
+void loop()
 {
-  
+  start_connection();
+  Serial.println("----------------------------------------------------");
+  Serial.println("I2C started");
   slave_recieve_request();
 }

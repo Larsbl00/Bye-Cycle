@@ -14,9 +14,6 @@ void setup() {
   Serial.println("----------------------------------------------------");
   Serial.println("Serial is online");
 
-  start_connection();
-  Serial.println("----------------------------------------------------");
-  Serial.println("I2C started");
 
 
 }
@@ -30,6 +27,9 @@ void loop()
   //master_send_request_ping(messagePing, 4);
   // master_recieve_request(message, messageLength);
 
+  start_connection();
+  Serial.println("----------------------------------------------------");
+  Serial.println("I2C started");
 
   Serial.print("First send ");
   Serial.println(message);
