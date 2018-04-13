@@ -1,6 +1,7 @@
 #ifndef LIGHTS_H
 #define LIGHTS_H
 #include <Arduino.h>
+#include <limits.h>
 
 
 class Lights {
@@ -8,7 +9,7 @@ class Lights {
     uint8_t location;
     uint8_t* port = NULL;
     unsigned long timeToBurn;
-    unsigned long waitTill = -1;
+    unsigned long waitTill = LONG_MAX;
 
 
   public:
@@ -29,7 +30,7 @@ class Lights {
 
     void CheckState() {
       if (!(*port & (1 << location)) && millis() > waitTill) {
-        waitTill = -1;
+        waitTill = LONG_MAX;
       }
       if (millis() < timeToBurn && millis() >= waitTill) {
         *port |= (1 << location);
@@ -55,7 +56,6 @@ class Lights {
       Serial.print(", ");
       Serial.print("Time to burn: ");
       Serial.print(timeToBurn);
-      Serial.print(", ");
       Serial.print(", ");
       Serial.print("Wait for: ");
       Serial.print(waitTill);

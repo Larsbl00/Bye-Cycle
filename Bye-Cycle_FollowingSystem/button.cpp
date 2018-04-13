@@ -2,4 +2,5 @@
 #include <stdint.h>
 #include "button.h"
 
-
+#define DistanceBetweenButtonsInPair
+#define DistanceBetweenLightPosts

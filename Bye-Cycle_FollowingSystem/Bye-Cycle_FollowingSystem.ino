@@ -9,7 +9,6 @@ Button button1 = Button(2, &PINB, &DDRB);
 Button button2 = Button(3, &PINB, &DDRB);
 
 const uint8_t lightsSize =  sizeof(lights) / sizeof(Lights);
-bool timerIsSet = false;
 
 void setup() {
   Serial.begin(9600);
@@ -20,21 +19,28 @@ void setup() {
 
 void loop() {
   CheckLightArray(lights, lightsSize);
-  if (millis() % 1000 == 0) {
-    button1.Print();
-    button2.Print();
-  }
+  button1.Read();
+  button2.Read();
 
-  if (!timerIsSet) {
-    if (button1.Read()) {
-
-    } else if (button2.Read()) {
-
+  if (button1.IsSet() && button2.IsSet()) {
+    long difference = button1.LastTimeActive() - button2.LastTimeActive();
+    Serial.println(abs(difference));
+    if (difference > 0) {
+      //Button1 was pressed later than Button2
+      FollowSequence(lights, lightsSize, 'l', abs(difference));
+    } else if (difference < 0) {
+      //Button2 was pressed later than Button1
+      FollowSequence(lights, lightsSize, 'r', abs(difference));
+    } else {
+      //There was no delay detected
+      for (int i = 0; i < lightsSize; i++) {
+        lights[i].Burn(5000, 0);
+      }
     }
-  } else {
-
-    timerIsSet = false;
+    button1.IsSet(false);
+    button2.IsSet(false);
   }
+
 
   if (Serial.available()) {
     char readChar  = (char)Serial.read();

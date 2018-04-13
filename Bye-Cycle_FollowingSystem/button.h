@@ -3,9 +3,11 @@
 
 #include <stdint.h>
 #include <stdio.h>
+#include "lights.h"
 
 class Button {
   private:
+    bool isSet;
     uint8_t location;
     uint8_t state;
     uint8_t lastState = 0;
@@ -22,6 +24,19 @@ class Button {
       *registerButton &= ~(1 << location);
     }
 
+    //Properties
+    long LastTimeActive() {
+      return lastTimeActive;
+    }
+
+    bool IsSet() {
+      return isSet;
+    }
+
+    void IsSet(bool value) {
+      isSet = value;
+    }
+
     //Functions
     uint8_t Read() {
       uint8_t returnValue = 0;
@@ -30,20 +45,18 @@ class Button {
       if (millis() - lastDebounceTime > 50) {
         if (readState != state) {
           state = readState;
-          lastTimeActive = millis();
-          if (state) returnValue = 1;
+          if (state) {
+            lastTimeActive = millis();
+            isSet = true;
+            returnValue = 1;
+          }
         }
       }
       lastState = readState;
       return (returnValue);
     }
 
-    long LastActive() {
-      return lastTimeActive;
-    }
-
     void Print() {
-     
       Serial.print("Type: Button, ");
       Serial.print("Location on register: ");
       Serial.print(location);
@@ -53,12 +66,16 @@ class Button {
       Serial.print(", ");
       Serial.print("State: ");
       if (*pin & (1 << location)) {
-        Serial.print("On");
+        Serial.print("On\n");
       } else  {
-        Serial.print("Off");
+        Serial.print("Off\n");
       }
-      Serial.println("");
     }
 };
+
+//Functions
+
+
+
 
 #endif
