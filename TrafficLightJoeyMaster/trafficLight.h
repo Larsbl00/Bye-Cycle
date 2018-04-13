@@ -6,7 +6,7 @@
 #define ledRed 7
 
 
-void modes(int stateChange);
+void modes(char stateChange);
 void alarmMode(int* ledState);
 void lightState(int* ledState, int ledPin);
 

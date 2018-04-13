@@ -2,20 +2,13 @@
 #include <Arduino.h>
 #include "communicationI2C.h"
 
-/*-------------------------------------------------------------*/
-// COM17
-// This library connects the Arduino to a device with I2C
-// protocol. It is also a master.
-//
-//
 #define ADDRESS (11)
 
-/*-------------------------------------------------------------*/
 void start_connection() {
   Wire.begin();
 }
 
-void master_send_request(int state) {
+void master_send_request(char state) {
   Wire.beginTransmission(ADDRESS);
   Wire.write(state);
   Wire.endTransmission();
@@ -28,7 +21,7 @@ void master_send_request(int state) {
   }
 */
 
-void master_recieve_request(int *recievedByte )
+void master_recieve_request(char *recievedByte )
 {
 
   Wire.requestFrom(ADDRESS, 1);
@@ -36,25 +29,21 @@ void master_recieve_request(int *recievedByte )
   if (Wire.available())
   {
     *recievedByte = Wire.read();
-    Serial.println(*recievedByte);
+    // Serial.println(*recievedByte);
   }
 }
 
 
-/*
-  void SendIformation(float* Longitude, float* Latitude, int* forwardMessage, int* distance) {
-  if (*Longitude != 0 || *Latitude != 0) {
-    Serial.print("%B");
-    Serial.print(*Latitude, 6);
-    Serial.print("!");
-    Serial.print(*Longitude, 6);
-    Serial.print("!");
-    Serial.print(*forwardMessage, 1);
-    Serial.print("!");
-    Serial.print(*distance);
-    Serial.println("#");
-  }
-  }
 
-*/
+void SendIformation(String* device, String* command, int* value) {
+    Serial.print("%");
+    Serial.print(*device);
+    Serial.print(":");
+    Serial.print(*command);
+    Serial.print("-");
+    Serial.print(*value, 1);
+    Serial.println("#");
+}
+
+
 

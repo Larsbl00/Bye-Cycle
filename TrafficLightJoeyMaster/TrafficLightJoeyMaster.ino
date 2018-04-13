@@ -1,9 +1,13 @@
 #include "trafficLight.h"
 #include "communicationI2C.h"
 #include "waterSensor.h"
-int message = 49;
+
+char message = 'R';
+
 unsigned long previousMillis = 1000;
-long interval = 5000;
+long timer = 5000;
+int sensorValue = 0;
+
 void setup() {
 
   pinMode(ledGreen, OUTPUT);
@@ -14,59 +18,38 @@ void setup() {
   Serial.println("----------------------------------------------------");
   Serial.println("Serial is online");
 
-
-
 }
 
 void loop()
 {
 
-
-  //char messagePing[] = "ping";
-
-  //master_send_request_ping(messagePing, 4);
-  // master_recieve_request(message, messageLength);
-
   start_connection();
-  Serial.println("----------------------------------------------------");
-  Serial.println("I2C started");
+  //Serial.println("----------------------------------------------------");
+  //Serial.println("I2C started");
 
-  Serial.print("First send ");
-  Serial.println(message);
+  // Serial.print("First send ");
+  // Serial.println(message);
+
+
+  waterSensor_measurement_mode(&sensorValue);
+  waterSensor_Change_Interval(&sensorValue, &timer);
+
   master_send_request(message);
 
   master_recieve_request(&message);
-
-  if (message == 49)
+  if (message == 'R')
   { //red
-    modes(49);
-    message = 49;
-    Serial.print("We zitten nu in state 49 :");
-    Serial.println(message);
-    Serial.println("Red");
+    modes(message);
+    message = 'R';
+    //Serial.println(message);
+    //Serial.println("Red");
   }
 
-  /*
-    if (message == 50)
-    { //orange
-    modes(50);
-    message = 50;
-    Serial.println("orange");
-    }
-  */
-  if (message == 51)
+  if (message == 'G')
   { //green
-    modes(51);
-    message = 51;
-    Serial.print("We zitten nu in state 51 :");
-    Serial.println(message);
-    Serial.println("Green");
+    modes(message);
+    message = 'G';
+    //Serial.println(message);
+    //Serial.println("Green");
   }
-
-  /*  else
-    {
-      modes(0);
-      master_send_request(0);
-    }*/
-
 }

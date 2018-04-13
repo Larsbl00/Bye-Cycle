@@ -6,38 +6,21 @@
 //long interval = 5000;
 int ledState = LOW;
 
-void modes(int stateChange) {
+void modes(char stateChange) {
   switch (stateChange) {
 
-    /*default:
-      interval = 250;
-      alarmMode(&ledState);
-      break;*/
-
-    case 51:
-      // lightState(&ledState, ledGreen);
-
+    case 'G':   
       Serial.println("trafficLightGreen");
       digitalWrite(ledGreen, HIGH);
       digitalWrite(ledOrange, LOW);
-      digitalWrite(ledRed, LOW);
-      delay(1000);
+      digitalWrite(ledRed, LOW);      
       break;
-    /*
-        case 50:
-          Serial.println("orange");
-          lightState(&ledState, ledOrange);
-          digitalWrite(ledGreen, LOW);
-          digitalWrite(ledRed, LOW);
-          break;
-    */
-    case 49:
-      //   lightState(&ledState, ledRed);
+      
+    case 'R':
       Serial.println("trafficLightRed");
       digitalWrite(ledRed, HIGH);
       digitalWrite(ledOrange, LOW);
       digitalWrite(ledGreen, LOW);
-      delay(1000);
       break;
   }
 }

@@ -3,16 +3,10 @@
 #include "trafficLight.h"
 #include "communicationI2C.h"
 unsigned long previousMillis = 1000;
-long interval = 5000;
-/*-------------------------------------------------------------*/
-// COM5
-// This library connects the Arduino to a device with I2C
-// protocol. It is also a master.
-//
-//
+long timer = 5000;
+
 #define ADDRESS (11)
 
-/*-------------------------------------------------------------*/
 void start_connection()
 {
   Wire.begin(ADDRESS);
@@ -20,101 +14,52 @@ void start_connection()
 
 void slave_recieve_request()
 {
-
   Wire.onReceive(recieveEvent); // register event
 }
 
 
-void recieveEvent(int recievedByte)
+void recieveEvent(char recievedByte)
 {
-//  unsigned long currentMillis = millis();
+  unsigned long currentMillis = millis();
+  
   if (Wire.available())
   {
     recievedByte = Wire.read();
     Serial.println(recievedByte);
   }
-//  if (currentMillis - previousMillis >= interval)
-//  {
-//    previousMillis = currentMillis;
-    if (recievedByte == 0)
-    { //Alarm
-      modes(recievedByte);
-      slave_send_request(2);
-    }
-
-     if (recievedByte == 49)
+  if (currentMillis - previousMillis >= timer)
+  {
+    previousMillis = currentMillis;
+    if (recievedByte == 'R')//49 is Red
     { //Red
       Serial.println("Red");
       modes(recievedByte);
-      slave_send_request(3);//51
+      slave_send_request('G');//51
     }
-    /*
-      if (recievedByte == 50)
-      { //Orange
-         Serial.println("Orange");
-        modes(recievedByte);
-        slave_send_request(2);
-      }
-    */
-    if (recievedByte == 51)
+    if (recievedByte == 'G')//51 is green
     { //Green
       Serial.println("Green");
       modes(recievedByte);
-      slave_send_request(1);//49
+      slave_send_request('R');//49
     }
-//  }
+  }
 
 }
 
-void slave_send_request(int requestOtherMode)
+void slave_send_request(char requestOtherMode)
 {
-
-  if (requestOtherMode == 1) {
+  if (requestOtherMode == 'R') {
     Wire.onRequest(requestEventRed);
   }
-  if (requestOtherMode == 2) {
-    Wire.onRequest(requestEventOrange);
-  }
-  if (requestOtherMode == 3) {
+  if (requestOtherMode == 'G') {
     Wire.onRequest(requestEventGreen);
   }
-
 }
 
 void requestEventRed() {
-  Wire.write(49);
-}
-void requestEventOrange() {
-  Wire.write(50);
+  Wire.write('R');
 }
 void requestEventGreen() {
-  Wire.write(51);
+  Wire.write('G');
 }
-
-
-
-/*void slave_recieve_request_ping()
-  {
-  Wire.onReceive(recieveEventPing);
-  }
-
-
-  void recieveEventPing(int recievedByte)
-  {
-  int counter = 0;
-  char recievedMessage[] = "";
-
-  if (Wire.available())
-  {
-
-    char incomingChar = Wire.read();
-
-    recievedMessage[counter] = incomingChar;
-
-    counter ++;
-
-  }
-  Serial.println(recievedMessage);
-  }*/
-
 
