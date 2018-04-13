@@ -37,10 +37,17 @@
             this.buttonSave = new System.Windows.Forms.Button();
             this.listBoxData = new System.Windows.Forms.ListBox();
             this.chart1 = new System.Windows.Forms.DataVisualization.Charting.Chart();
-            this.groupBox1 = new System.Windows.Forms.GroupBox();
+            this.groupBoxData = new System.Windows.Forms.GroupBox();
+            this.directoryEntry1 = new System.DirectoryServices.DirectoryEntry();
+            this.backgroundWorker1 = new System.ComponentModel.BackgroundWorker();
+            this.backgroundWorker2 = new System.ComponentModel.BackgroundWorker();
+            this.groupBoxFollowSystem = new System.Windows.Forms.GroupBox();
+            this.buttonPieChart = new System.Windows.Forms.Button();
+            this.buttonBarChart = new System.Windows.Forms.Button();
             this.groupBoxIO.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.chart1)).BeginInit();
-            this.groupBox1.SuspendLayout();
+            this.groupBoxData.SuspendLayout();
+            this.groupBoxFollowSystem.SuspendLayout();
             this.SuspendLayout();
             // 
             // groupBoxIO
@@ -97,40 +104,71 @@
             this.chart1.ChartAreas.Add(chartArea1);
             legend1.Name = "Legend1";
             this.chart1.Legends.Add(legend1);
-            this.chart1.Location = new System.Drawing.Point(223, 13);
+            this.chart1.Location = new System.Drawing.Point(6, 26);
             this.chart1.Name = "chart1";
-            this.chart1.Palette = System.Windows.Forms.DataVisualization.Charting.ChartColorPalette.Chocolate;
+            this.chart1.Palette = System.Windows.Forms.DataVisualization.Charting.ChartColorPalette.Pastel;
             series1.ChartArea = "ChartArea1";
             series1.Legend = "Legend1";
             series1.Name = "Series1";
             this.chart1.Series.Add(series1);
-            this.chart1.Size = new System.Drawing.Size(603, 292);
+            this.chart1.Size = new System.Drawing.Size(738, 292);
             this.chart1.TabIndex = 2;
             this.chart1.Text = "chart1";
             // 
-            // groupBox1
+            // groupBoxData
             // 
-            this.groupBox1.Controls.Add(this.listBoxData);
-            this.groupBox1.Location = new System.Drawing.Point(13, 13);
-            this.groupBox1.Name = "groupBox1";
-            this.groupBox1.Size = new System.Drawing.Size(204, 292);
-            this.groupBox1.TabIndex = 3;
-            this.groupBox1.TabStop = false;
-            this.groupBox1.Text = "groupBox1";
+            this.groupBoxData.Controls.Add(this.listBoxData);
+            this.groupBoxData.Location = new System.Drawing.Point(13, 13);
+            this.groupBoxData.Name = "groupBoxData";
+            this.groupBoxData.Size = new System.Drawing.Size(204, 292);
+            this.groupBoxData.TabIndex = 3;
+            this.groupBoxData.TabStop = false;
+            this.groupBoxData.Text = "Dates";
+            // 
+            // groupBoxFollowSystem
+            // 
+            this.groupBoxFollowSystem.Controls.Add(this.buttonBarChart);
+            this.groupBoxFollowSystem.Controls.Add(this.buttonPieChart);
+            this.groupBoxFollowSystem.Controls.Add(this.chart1);
+            this.groupBoxFollowSystem.Location = new System.Drawing.Point(224, 13);
+            this.groupBoxFollowSystem.Name = "groupBoxFollowSystem";
+            this.groupBoxFollowSystem.Size = new System.Drawing.Size(750, 365);
+            this.groupBoxFollowSystem.TabIndex = 4;
+            this.groupBoxFollowSystem.TabStop = false;
+            this.groupBoxFollowSystem.Text = "Follow Light";
+            // 
+            // buttonPieChart
+            // 
+            this.buttonPieChart.Location = new System.Drawing.Point(6, 324);
+            this.buttonPieChart.Name = "buttonPieChart";
+            this.buttonPieChart.Size = new System.Drawing.Size(365, 33);
+            this.buttonPieChart.TabIndex = 3;
+            this.buttonPieChart.Text = "Pie chart";
+            this.buttonPieChart.UseVisualStyleBackColor = true;
+            // 
+            // buttonBarChart
+            // 
+            this.buttonBarChart.Location = new System.Drawing.Point(377, 324);
+            this.buttonBarChart.Name = "buttonBarChart";
+            this.buttonBarChart.Size = new System.Drawing.Size(365, 33);
+            this.buttonBarChart.TabIndex = 4;
+            this.buttonBarChart.Text = "Bar chart";
+            this.buttonBarChart.UseVisualStyleBackColor = true;
             // 
             // Form1
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(838, 541);
-            this.Controls.Add(this.groupBox1);
-            this.Controls.Add(this.chart1);
+            this.ClientSize = new System.Drawing.Size(1636, 632);
+            this.Controls.Add(this.groupBoxFollowSystem);
+            this.Controls.Add(this.groupBoxData);
             this.Controls.Add(this.groupBoxIO);
             this.Name = "Form1";
             this.Text = "Form1";
             this.groupBoxIO.ResumeLayout(false);
             ((System.ComponentModel.ISupportInitialize)(this.chart1)).EndInit();
-            this.groupBox1.ResumeLayout(false);
+            this.groupBoxData.ResumeLayout(false);
+            this.groupBoxFollowSystem.ResumeLayout(false);
             this.ResumeLayout(false);
 
         }
@@ -143,7 +181,13 @@
         private System.Windows.Forms.Button buttonSave;
         private System.Windows.Forms.ListBox listBoxData;
         private System.Windows.Forms.DataVisualization.Charting.Chart chart1;
-        private System.Windows.Forms.GroupBox groupBox1;
+        private System.Windows.Forms.GroupBox groupBoxData;
+        private System.DirectoryServices.DirectoryEntry directoryEntry1;
+        private System.ComponentModel.BackgroundWorker backgroundWorker1;
+        private System.ComponentModel.BackgroundWorker backgroundWorker2;
+        private System.Windows.Forms.GroupBox groupBoxFollowSystem;
+        private System.Windows.Forms.Button buttonBarChart;
+        private System.Windows.Forms.Button buttonPieChart;
     }
 }
 
