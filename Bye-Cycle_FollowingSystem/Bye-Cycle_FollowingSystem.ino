@@ -1,4 +1,5 @@
 #include <Arduino.h>
+#include <string.h>
 #include "ldr.h"
 #include "lights.h"
 #include "button.h"
@@ -11,7 +12,17 @@ Button button1 = Button(2, &PINB, &DDRB);
 Button button2 = Button(3, &PINB, &DDRB);
 
 bool systemIsOn = true;
+String serialInput;
 const uint8_t lightsSize =  sizeof(lights) / sizeof(Lights);
+
+void serialEvent() {
+  serialInput = "";
+  while (Serial.available()) {
+    serialInput += (char)Serial.read();
+    delay(1.5f);
+  }
+  Serial.println(serialInput);
+}
 
 void setup() {
   Serial.begin(9600);
@@ -22,6 +33,14 @@ void setup() {
 
 void loop() {
   CheckLightArray(lights, lightsSize);
+  if (serialInput != "" && serialInput.charAt(1) == 'F') {
+    String varToChange = serialInput.substring(3, serialInput.indexOf('-') - 1);
+    uint8_t value = serialInput.substring(serialInput.indexOf('-') + 1, serialInput.indexOf('#')).toInt();
+    if (varToChange == "followOff") {
+      systemIsOn = (bool)value;
+    }
+  }
+
   if (systemIsOn && IsDark(ldr)) {
     button1.Read();
     button2.Read();
