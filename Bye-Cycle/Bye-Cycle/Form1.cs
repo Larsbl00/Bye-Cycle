@@ -17,6 +17,5 @@ namespace Bye_Cycle
             InitializeComponent();
         }
 
-
     }
 }

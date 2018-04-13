@@ -8,5 +8,6 @@ namespace Bye_Cycle
 {
     class CommunicationArduino
     {
+
     }
 }

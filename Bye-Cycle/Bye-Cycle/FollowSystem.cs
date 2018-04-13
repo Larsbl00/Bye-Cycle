@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace Bye_Cycle
 {
-    class FollowSystem
+    class FollowSystem : Data
     {
     }
 }

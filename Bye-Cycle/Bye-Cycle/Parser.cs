@@ -8,5 +8,14 @@ namespace Bye_Cycle
 {
     class Parser
     {
+        public Parser()
+        {
+            CommunicationArduino communicationArduino = new CommunicationArduino();
+            Data dataFiller = new Data();
+        }
+        public Data ParseArduinoData(string input)
+        {
+            return null;
+        }
     }
 }
