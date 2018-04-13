@@ -24,15 +24,9 @@ void loop()
 {
 
   start_connection();
-  //Serial.println("----------------------------------------------------");
-  //Serial.println("I2C started");
-
-  // Serial.print("First send ");
-  // Serial.println(message);
-
 
   waterSensor_measurement_mode(&sensorValue);
-  waterSensor_Change_Interval(&sensorValue, &timer);
+  waterSensor_change_interval(&sensorValue, &timer);
 
   master_send_request(message);
 

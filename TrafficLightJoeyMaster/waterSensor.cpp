@@ -16,7 +16,7 @@ int waterSensor_measurement_mode(int *sensorValue)
   Serial.println(*sensorValue);
 }
 
-int waterSensor_Change_Interval(int *sensorValue, long *timer){
+int waterSensor_change_interval(int *sensorValue, long *timer){
 
   if(*sensorValue< 100)
   {   
