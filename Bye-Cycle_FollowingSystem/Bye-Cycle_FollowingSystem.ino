@@ -5,20 +5,37 @@
 
 Lights lights[] = {Lights (2, &PORTD, &DDRD), Lights(4, &PORTD, &DDRD), Lights(7, &PORTD, &DDRD), Lights(0, &PORTB, &DDRB)};
 
-Button button1 = Button(2, &PORTB, &DDRB);
+Button button1 = Button(2, &PINB, &DDRB);
+Button button2 = Button(3, &PINB, &DDRB);
 
 const uint8_t lightsSize =  sizeof(lights) / sizeof(Lights);
+bool timerIsSet = false;
 
 void setup() {
   Serial.begin(9600);
   PrintLights(lights, lightsSize);
+  button1.Print();
+  button2.Print();
 }
 
 void loop() {
   CheckLightArray(lights, lightsSize);
+  if (millis() % 1000 == 0) {
+    button1.Print();
+    button2.Print();
+  }
 
-  Serial.println(button1.Read());
-  button1.Print();
+  if (!timerIsSet) {
+    if (button1.Read()) {
+
+    } else if (button2.Read()) {
+
+    }
+  } else {
+
+    timerIsSet = false;
+  }
+
   if (Serial.available()) {
     char readChar  = (char)Serial.read();
     Serial.println(readChar);

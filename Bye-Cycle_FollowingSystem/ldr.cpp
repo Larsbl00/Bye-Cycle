@@ -3,10 +3,10 @@
 
 int samples[10];
 const int samplesSize = sizeof(samples) / sizeof(samples[0]);
-byte samplesItterator;
+byte samplesItterator = 0;
 
 
-long returnAverage(byte analogInput) {
+int returnAverage(byte analogInput) {
   if (samplesItterator < samplesSize) {
     samples[samplesItterator] = analogRead(analogInput);
   } else {
@@ -16,7 +16,7 @@ long returnAverage(byte analogInput) {
 
   long total;
   for (int i = 0; i < samplesSize; i++) total += samples[i];
-  return (total / samplesSize);
+  return (int)(total / samplesSize);
 }
 
 

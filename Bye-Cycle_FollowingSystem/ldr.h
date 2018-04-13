@@ -8,6 +8,6 @@
 //
 //@param analogInput : This is the pin where the analog sensor is wired to
 //
-long returnAverage(byte analogInput);
+int returnAverage(byte analogInput);
 
 #endif

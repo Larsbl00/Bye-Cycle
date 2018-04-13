@@ -39,6 +39,7 @@ class Lights {
     }
 
     void Print() {
+      Serial.print("Type: LED, ");
       Serial.print("Location on register: ");
       Serial.print(location);
       Serial.print(", ");
@@ -55,14 +56,6 @@ class Lights {
       Serial.print("Time to burn: ");
       Serial.print(timeToBurn);
       Serial.print(", ");
-      long remaining = timeToBurn - millis();
-      if (remaining > 0) {
-        Serial.print("Time remaining: ");
-        Serial.print(remaining);
-      } else {
-        Serial.print("Time remaining: ");
-        Serial.print(0);
-      }
       Serial.print(", ");
       Serial.print("Wait for: ");
       Serial.print(waitTill);
