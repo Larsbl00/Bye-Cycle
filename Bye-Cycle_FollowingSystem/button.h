@@ -1,9 +1,14 @@
 #ifndef BUTTON_H
 #define BUTTON_H
 
+//These distances are the distance in cm
+#define DistanceBetweenButtonsInPair 1
+#define DistanceBetweenLightPosts 8
+
 #include <stdint.h>
 #include <stdio.h>
 #include "lights.h"
+
 
 class Button {
   private:
