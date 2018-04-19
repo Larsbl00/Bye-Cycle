@@ -5,6 +5,7 @@
 #include "button.h"
 
 #define ldr A0
+#define isOnIndicator 13
 
 Lights lights[] = {Lights (2, &PORTD, &DDRD), Lights(4, &PORTD, &DDRD), Lights(7, &PORTD, &DDRD), Lights(0, &PORTB, &DDRB)};
 
@@ -19,13 +20,28 @@ void serialEvent() {
   serialInput = "";
   while (Serial.available()) {
     serialInput += (char)Serial.read();
-    delay(1.5f);
+    delay(2);
   }
-  Serial.println(serialInput);
+
+  //Sample protocol: %<DestinationLetter>:<Command>-<Value>#
+  if (serialInput != "" && serialInput.charAt(1) == 'F') {
+    String varToChange = serialInput.substring(3, serialInput.indexOf('-'));
+    uint8_t value = serialInput.substring(serialInput.indexOf('-') + 1, serialInput.indexOf('#')).toInt();
+    Serial.println(varToChange);
+    Serial.println(value);
+    if (varToChange == "followOff") {
+      systemIsOn = !(bool)value;
+      Serial.print("Follow Status: ");
+      Serial.print(systemIsOn);
+      Serial.print("\n");
+    }
+  }
 }
+
 
 void setup() {
   Serial.begin(9600);
+  pinMode(isOnIndicator, OUTPUT);
   PrintLights(lights, lightsSize);
   button1.Print();
   button2.Print();
@@ -33,14 +49,7 @@ void setup() {
 
 void loop() {
   CheckLightArray(lights, lightsSize);
-  if (serialInput != "" && serialInput.charAt(1) == 'F') {
-    String varToChange = serialInput.substring(3, serialInput.indexOf('-') - 1);
-    uint8_t value = serialInput.substring(serialInput.indexOf('-') + 1, serialInput.indexOf('#')).toInt();
-    if (varToChange == "followOff") {
-      systemIsOn = (bool)value;
-    }
-  }
-
+  
   if (systemIsOn && IsDark(ldr)) {
     button1.Read();
     button2.Read();
@@ -65,4 +74,7 @@ void loop() {
       button2.IsSet(false);
     }
   }
+  
+  digitalWrite(isOnIndicator, systemIsOn);
+
 }
