@@ -11,7 +11,6 @@ namespace Bye_Cycle
         public Parser()
         {
             CommunicationArduino communicationArduino = new CommunicationArduino();
-            Data dataFiller = new Data();
         }
         public Data ParseArduinoData(string input)
         {

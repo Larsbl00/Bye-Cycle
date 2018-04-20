@@ -11,10 +11,48 @@ namespace Bye_Cycle
     {
 
         private List<Data> data;
+        private CommunicationArduino communicationArduino;
         public Administration()
         {
             data  = new List<Data>();
+            communicationArduino = new CommunicationArduino();
+
         }
+
+        public string readMessage()
+        {
+            return communicationArduino.ReadMessage();
+        }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
         public Data AddData()
         {

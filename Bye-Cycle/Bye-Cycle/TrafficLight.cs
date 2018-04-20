@@ -10,7 +10,7 @@ namespace Bye_Cycle
 {
     class TrafficLight : Data
     {
-        private List<long> totalTimeRain = new List<long>();
+        private List<long> totalTimeRain;
         public int HowManyBicyclesPrioritised { get; private set; }
 
         private bool isRaining;
@@ -19,7 +19,7 @@ namespace Bye_Cycle
 
         public TrafficLight(DateTime currentDay) : base (currentDay)
         {
-            
+            totalTimeRain =  new List<long>();
         }
 
 
@@ -48,7 +48,15 @@ namespace Bye_Cycle
         // This method Calculates how many bikes have been prioritised
         public void CalculateAmountOfBikesPrioritised(int bikesPrioritised)
         {
-            HowManyBicyclesPrioritised = +bikesPrioritised;
+            try
+            {
+                HowManyBicyclesPrioritised = +bikesPrioritised;
+            }
+            catch (NullReferenceException)
+            {
+                HowManyBicyclesPrioritised = HowManyBicyclesPrioritised;
+            }
+            
         }
     }
 }

@@ -9,9 +9,10 @@ namespace Bye_Cycle
 {
     class FollowSystem : Data
     {
+        private Stopwatch stopwatch = new Stopwatch();
+
         private List<long> timeLightsOn = new List<long>();
 
-        private Stopwatch stopwatch = new Stopwatch();
         public int HowManyBikes { get; private set; }
 
         public int PrefferedSide { get; private set; }
@@ -28,7 +29,7 @@ namespace Bye_Cycle
         public void CalculateTimeLightsOn(bool lightsOn)
         {
             if (lightsOn)
-            {
+            {  
                 if (!stopwatch.IsRunning)
                 {
                     stopwatch.Start();
@@ -51,7 +52,7 @@ namespace Bye_Cycle
         public void CalculatePreferredSide(bool side)
         {
             HowManyBikes++;
-            if (side == true)
+            if (side)
             {
                 //If a bikes comes from the left.
                 PrefferedSide = +1;
