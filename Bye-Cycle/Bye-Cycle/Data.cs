@@ -8,5 +8,11 @@ namespace Bye_Cycle
 {
     class Data
     {
+        public DateTime Date { get; private set; }
+
+        public Data(DateTime Date)
+        {
+            this.Date = Date;
+        }
     }
 }
