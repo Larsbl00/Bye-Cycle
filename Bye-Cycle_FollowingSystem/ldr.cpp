@@ -3,7 +3,7 @@
 #include "ldr.h"
 
 #define hysteresis 45
-#define darkTreshold 4000
+#define darkTreshold 430
 
 int samples[100];
 const int samplesSize = sizeof(samples) / sizeof(samples[0]);

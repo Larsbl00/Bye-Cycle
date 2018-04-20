@@ -59,8 +59,6 @@ void serialEvent() {
   if (serialInput != "" && serialInput.charAt(0) == '%' && serialInput.charAt(1) == 'F' && serialInput.indexOf('#') != -1) {
     String varToChange = serialInput.substring(3, serialInput.indexOf('-'));
     uint8_t value = serialInput.substring(serialInput.indexOf('-') + 1, serialInput.indexOf('#')).toInt();
-    Serial.println(varToChange);
-    Serial.println(value);
     if (varToChange == "followOff") {
       systemIsOn = !(bool)value;
     }
@@ -82,9 +80,15 @@ void loop() {
 
   digitalWrite(13, systemIsOn);
 
-  if (systemIsOn && IsDark(ldr)) {
-    CheckButtonSet(buttons1, 2);
-    CheckButtonSet(buttons2, 2);
+  if (IsDark(ldr)) {
+    if (systemIsOn) {
+      CheckButtonSet(buttons1, 2);
+      CheckButtonSet(buttons2, 2);
+    } else {
+      for (int i = 0; i < lightsSize; i++) {
+          lights[i].Burn(1, 0);
+      }
+    }
   }
 
   lastTimeSystemOn = systemIsOn;
