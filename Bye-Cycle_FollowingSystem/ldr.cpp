@@ -11,12 +11,10 @@ uint8_t samplesItterator = 0;
 
 
 int returnAverage(byte analogInput) {
-  if (samplesItterator < samplesSize) {
-    samples[samplesItterator] = analogRead(analogInput);
-  } else {
+  if (samplesItterator > samplesSize) {
     samplesItterator = 0;
-    samples[samplesItterator] = analogRead(analogInput);
   }
+  samples[samplesItterator] = analogRead(analogInput);
   samplesItterator++;
   long total;
   for (int i = 0; i < samplesSize; i++) total += samples[i];

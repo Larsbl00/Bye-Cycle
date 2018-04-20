@@ -32,10 +32,10 @@ void CheckButtonSet(Button* buttons, int arraySize) {
     long TimeToBurn = 50000 * DistanceBetweenLightPosts / DistanceBetweenButtonsInPair; //Values defined in the button.h
     long difference = buttons[0].LastTimeActive() - buttons[1].LastTimeActive();
     if (difference > 0) {
-      //Button1 was pressed later than Button2 -> Cyclist goes left
+      //Button1 was pressed later than Button2 -> Cyclist moves left in the array
       directionChar = 'l';
     } else if (difference < 0) {
-      //Button2 was pressed later than Button1 -> Cyclist goed right
+      //Button2 was pressed later than Button1 -> Cyclist moves right in the array
       directionChar = 'r';
     } else {
       //There was no difference -> No direction detected, activates error mode
