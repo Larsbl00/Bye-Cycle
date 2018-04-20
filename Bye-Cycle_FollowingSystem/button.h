@@ -1,7 +1,7 @@
 #ifndef BUTTON_H
 #define BUTTON_H
 
-//These distances are the distance in cm
+//These distances are the distances in cm
 #define DistanceBetweenButtonsInPair 1
 #define DistanceBetweenLightPosts 4
 
@@ -62,7 +62,7 @@ class Button {
     }
 
     void Print() {
-      char string[256] = "";
+      char string[128] = "";
       sprintf(string, "Type: Button, Location on register: %i, Location: 0x%x, State: ", location, (int)&pin);
       if (*pin & (1 << location)) {
         strcat(string, "On");

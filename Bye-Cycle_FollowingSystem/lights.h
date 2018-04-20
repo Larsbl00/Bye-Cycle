@@ -47,7 +47,7 @@ class Lights {
       } else {
         sprintf(string + strlen(string), "Off");
       }
-      sprintf(string + strlen(string), ", TimeToBurn: %ls, Wait for: %ls", timeToBurn, waitTill);
+      sprintf(string + strlen(string), ", TimeToBurn: %lu, Wait for: %lu", timeToBurn, waitTill);
       Serial.println(string);
     }
 };

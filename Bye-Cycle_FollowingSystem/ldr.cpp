@@ -3,7 +3,7 @@
 #include "ldr.h"
 
 #define hysteresis 45
-#define darkTreshold 430
+#define darkTreshold 450
 
 int samples[100];
 const int samplesSize = sizeof(samples) / sizeof(samples[0]);
@@ -26,9 +26,7 @@ bool IsDark(uint8_t pin) {
   int average = returnAverage(pin);
   if (average <= (darkTreshold - hysteresis) && isDark == false) {
     isDark = true;
-  } /*else if (average > (darkTreshold + hysteresis) && isDark) {
-    isDark = false;
-  }*/
+  }
   return isDark;
 }
 

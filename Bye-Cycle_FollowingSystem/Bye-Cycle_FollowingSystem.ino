@@ -23,8 +23,9 @@ void SendProtocol(char person, char* var, int value) {
   Serial.println(messageToSend);
 }
 
+//Checks all buttons
 void CheckButtonSet(Button* buttons, int arraySize) {
-  if (arraySize != 2) return;
+  if (arraySize != 2 || buttons == NULL) return;
   buttons[0].Read();
   buttons[1].Read();
   if (buttons[0].IsSet() && buttons[1].IsSet()) {
@@ -42,6 +43,7 @@ void CheckButtonSet(Button* buttons, int arraySize) {
       directionChar = 'u';
     }
     TimeToBurn = (abs(difference) * DistanceBetweenLightPosts / DistanceBetweenButtonsInPair);
+    SendProtocol('D', "timeActive", TimeToBurn);
     SendProtocol('D', "direction", directionChar);
     FollowSequence(lights, lightsSize, directionChar, TimeToBurn);
     buttons[0].IsSet(false);
@@ -49,6 +51,7 @@ void CheckButtonSet(Button* buttons, int arraySize) {
   }
 }
 
+//This event is triggered when something was recieved in the serialport
 void serialEvent() {
   serialInput = "";
   while (Serial.available()) {
@@ -66,19 +69,20 @@ void serialEvent() {
 }
 
 void setup() {
-  Serial.begin(9600);
+  Serial.begin(38400);
   pinMode(13, OUTPUT);
+
+  //Prints all items, this is for debugging purposes
   PrintLights(lights, lightsSize);
+  buttons1[0].Print();
+  buttons1[1].Print();
+  buttons2[0].Print();
+  buttons2[1].Print();
 }
 
 void loop() {
+  //Calls the check funtion on lights, to determine if they should be on
   CheckLightArray(lights, lightsSize);
-
-  if (lastTimeSystemOn != systemIsOn) {
-    SendProtocol('D', "isActive", systemIsOn);
-  }
-
-  digitalWrite(13, systemIsOn);
 
   if (IsDark(ldr)) {
     if (systemIsOn) {
@@ -86,10 +90,9 @@ void loop() {
       CheckButtonSet(buttons2, 2);
     } else {
       for (int i = 0; i < lightsSize; i++) {
-          lights[i].Burn(1, 0);
+        lights[i].Burn(1, 0);
       }
     }
   }
-
   lastTimeSystemOn = systemIsOn;
 }
