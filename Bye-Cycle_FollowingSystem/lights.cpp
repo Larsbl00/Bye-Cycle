@@ -24,12 +24,17 @@ int FollowSequence(const Lights* lights, byte arraySize, char directionOfLights,
     switch (directionOfLights) {
       case 'l':
         for (int i = 0; i < arraySize; i++) {
-          lights[arraySize - (i+1)].Burn(timeToComplete, ((double)timeToComplete / arraySize) * i);
+          lights[arraySize - (i + 1)].Burn(timeToComplete, ((double)timeToComplete / arraySize) * i);
         }
         return 0;
       case 'r':
         for (int i = 0; i < arraySize; i++) {
           lights[i].Burn(timeToComplete, ((double)timeToComplete / arraySize) * i);
+        }
+        return 0;
+      case 'u':
+        for (int i = 0; i < arraySize; i++) {
+          lights[i].Burn(timeToComplete * arraySize + 5000, 0);
         }
         return 0;
       default:

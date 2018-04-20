@@ -5,16 +5,49 @@
 #include "button.h"
 
 #define ldr A0
-#define isOnIndicator 13
 
 Lights lights[] = {Lights (2, &PORTD, &DDRD), Lights(4, &PORTD, &DDRD), Lights(7, &PORTD, &DDRD), Lights(0, &PORTB, &DDRB)};
 
-Button button1 = Button(2, &PINB, &DDRB);
-Button button2 = Button(3, &PINB, &DDRB);
+Button buttons1[] = {Button(2, &PINB, &DDRB), Button(3, &PINB, &DDRB)};
+Button buttons2[] = {Button(5, &PIND, &DDRD), Button(6, &PIND, &DDRD)};
 
 bool systemIsOn = true;
+bool lastTimeSystemOn;
 String serialInput;
 const uint8_t lightsSize =  sizeof(lights) / sizeof(Lights);
+
+void SendProtocol(char person, char* var, int value) {
+  if (var == NULL) return;
+  char messageToSend[128] = "";
+  sprintf(messageToSend, "%c%c:%s-%i#", '%', person, var, value);
+  Serial.println(messageToSend);
+}
+
+void CheckButtonSet(Button* buttons, int arraySize) {
+  if (arraySize != 2) return;
+  buttons[0].Read();
+  buttons[1].Read();
+  if (buttons[0].IsSet() && buttons[1].IsSet()) {
+    char directionChar;
+    long TimeToBurn = 50000 * DistanceBetweenLightPosts / DistanceBetweenButtonsInPair; //Values defined in the button.h
+    long difference = buttons[0].LastTimeActive() - buttons[1].LastTimeActive();
+    if (difference > 0) {
+      //Button1 was pressed later than Button2 -> Cyclist goes left
+      directionChar = 'l';
+    } else if (difference < 0) {
+      //Button2 was pressed later than Button1 -> Cyclist goed right
+      directionChar = 'r';
+    } else {
+      //There was no difference -> No direction detected, activates error mode
+      directionChar = 'u';
+    }
+    TimeToBurn = (abs(difference) * DistanceBetweenLightPosts / DistanceBetweenButtonsInPair);
+    SendProtocol('D', "direction", directionChar);
+    FollowSequence(lights, lightsSize, directionChar, TimeToBurn);
+    buttons[0].IsSet(false);
+    buttons[1].IsSet(false);
+  }
+}
 
 void serialEvent() {
   serialInput = "";
@@ -22,59 +55,37 @@ void serialEvent() {
     serialInput += (char)Serial.read();
     delay(2);
   }
-
   //Sample protocol: %<DestinationLetter>:<Command>-<Value>#
-  if (serialInput != "" && serialInput.charAt(1) == 'F') {
+  if (serialInput != "" && serialInput.charAt(0) == '%' && serialInput.charAt(1) == 'F' && serialInput.indexOf('#') != -1) {
     String varToChange = serialInput.substring(3, serialInput.indexOf('-'));
     uint8_t value = serialInput.substring(serialInput.indexOf('-') + 1, serialInput.indexOf('#')).toInt();
     Serial.println(varToChange);
     Serial.println(value);
     if (varToChange == "followOff") {
       systemIsOn = !(bool)value;
-      Serial.print("Follow Status: ");
-      Serial.print(systemIsOn);
-      Serial.print("\n");
     }
   }
 }
 
-
 void setup() {
   Serial.begin(9600);
-  pinMode(isOnIndicator, OUTPUT);
+  pinMode(13, OUTPUT);
   PrintLights(lights, lightsSize);
-  button1.Print();
-  button2.Print();
 }
 
 void loop() {
   CheckLightArray(lights, lightsSize);
-  
-  if (systemIsOn && IsDark(ldr)) {
-    button1.Read();
-    button2.Read();
-    if (button1.IsSet() && button2.IsSet()) {
-      long difference = button1.LastTimeActive() - button2.LastTimeActive();
-      if (difference > 0) {
-        //Button1 was pressed later than Button2
-        long TimeToBurn = (abs(difference) * DistanceBetweenLightPosts / DistanceBetweenButtonsInPair);
-        FollowSequence(lights, lightsSize, 'l', TimeToBurn);
-      } else if (difference < 0) {
-        //Button2 was pressed later than Button1
-        long TimeToBurn = (abs(difference) * DistanceBetweenLightPosts / DistanceBetweenButtonsInPair);
-        FollowSequence(lights, lightsSize, 'r', TimeToBurn);
-      } else {
-        //There was no delay detected
-        long TimeToBurn = (5000 * DistanceBetweenLightPosts / DistanceBetweenButtonsInPair);
-        for (int i = 0; i < lightsSize; i++) {
-          lights[i].Burn(TimeToBurn, 0);
-        }
-      }
-      button1.IsSet(false);
-      button2.IsSet(false);
-    }
-  }
-  
-  digitalWrite(isOnIndicator, systemIsOn);
 
+  if (lastTimeSystemOn != systemIsOn) {
+    SendProtocol('D', "isActive", systemIsOn);
+  }
+
+  digitalWrite(13, systemIsOn);
+
+  if (systemIsOn && IsDark(ldr)) {
+    CheckButtonSet(buttons1, 2);
+    CheckButtonSet(buttons2, 2);
+  }
+
+  lastTimeSystemOn = systemIsOn;
 }

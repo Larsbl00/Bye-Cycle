@@ -3,7 +3,7 @@
 
 //These distances are the distance in cm
 #define DistanceBetweenButtonsInPair 1
-#define DistanceBetweenLightPosts 8
+#define DistanceBetweenLightPosts 4
 
 #include <stdint.h>
 #include <stdio.h>
@@ -62,25 +62,18 @@ class Button {
     }
 
     void Print() {
-      Serial.print("Type: Button, ");
-      Serial.print("Location on register: ");
-      Serial.print(location);
-      Serial.print(", ");
-      Serial.print("Location: 0x");
-      Serial.print((int)&pin, HEX);
-      Serial.print(", ");
-      Serial.print("State: ");
+      char string[256] = "";
+      sprintf(string, "Type: Button, Location on register: %i, Location: 0x%x, State: ", location, (int)&pin);
       if (*pin & (1 << location)) {
-        Serial.print("On\n");
+        strcat(string, "On");
       } else  {
-        Serial.print("Off\n");
+        strcat(string, "Off");
       }
+      Serial.println(string);
     }
 };
 
 //Functions
-
-
 
 
 #endif

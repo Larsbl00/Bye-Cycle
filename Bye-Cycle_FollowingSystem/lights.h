@@ -40,26 +40,15 @@ class Lights {
     }
 
     void Print() {
-      Serial.print("Type: LED, ");
-      Serial.print("Location on register: ");
-      Serial.print(location);
-      Serial.print(", ");
-      Serial.print("Location: 0x");
-      Serial.print((int)&port, HEX);
-      Serial.print(", ");
-      Serial.print("Status: ");
+      char string[256] = "";
+      sprintf(string, "Type: LED, Location on register: %i, Location: 0x%x, Status: ", location, (int)&port);
       if (*port & 1 << location) {
-        Serial.print("On");
+        sprintf(string + strlen(string), "On");
       } else {
-        Serial.print("Off");
+        sprintf(string + strlen(string), "Off");
       }
-      Serial.print(", ");
-      Serial.print("Time to burn: ");
-      Serial.print(timeToBurn);
-      Serial.print(", ");
-      Serial.print("Wait for: ");
-      Serial.print(waitTill);
-      Serial.println("");
+      sprintf(string + strlen(string), ", TimeToBurn: %ls, Wait for: %ls", timeToBurn, waitTill);
+      Serial.println(string);
     }
 };
 
