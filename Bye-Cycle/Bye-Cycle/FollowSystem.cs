@@ -46,9 +46,11 @@ namespace Bye_Cycle
 
         /*This method changes the prefferedside, the input is a bool True = left and false is right.
          * If prefferedside is above 0 prefferedside = left if its below 0 preffered side is right.
+         * It also counts how many bikes there have been.
          */
         public void CalculatePreferredSide(bool side)
         {
+            HowManyBikes++;
             if (side == true)
             {
                 //If a bikes comes from the left.
@@ -61,13 +63,10 @@ namespace Bye_Cycle
             }
         }
 
-        //This stores all the bikes of that day into the int HowManyBikes.
-        public void CalculateAmountOfBikes(int bikes)
+        // This method turns off the followingsystem, this makes it so that the light are always on if it is dark.
+        public void TurnOffFollowSystem()
         {
-            HowManyBikes = +bikes;
+            
         }
-
-
-
     }
 }
