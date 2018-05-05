@@ -5,6 +5,7 @@
 #define hysteresis 45
 #define darkTreshold 450
 
+bool isDark = false;
 int samples[100];
 const int samplesSize = sizeof(samples) / sizeof(samples[0]);
 uint8_t samplesItterator = 0;
@@ -22,10 +23,11 @@ int returnAverage(byte analogInput) {
 }
 
 bool IsDark(uint8_t pin) {
-  bool isDark = false;
   int average = returnAverage(pin);
   if (average <= (darkTreshold - hysteresis) && isDark == false) {
     isDark = true;
+  } else if (average >= (darkTreshold + hysteresis) && isDark == true){
+    isDark = false;
   }
   return isDark;
 }
