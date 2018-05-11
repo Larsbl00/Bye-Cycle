@@ -20,14 +20,9 @@ class Button {
     unsigned long lastDebounceTime = 0;
     unsigned long lastTimeActive;
 
-
   public:
     //Constructor
-    Button(uint8_t locationOnRegister, uint8_t* addressPin, uint8_t* registerButton) {
-      pin = addressPin;
-      location = locationOnRegister;
-      *registerButton &= ~(1 << location);
-    }
+    Button(uint8_t locationOnRegister, uint8_t* addressPin, uint8_t* registerButton);
 
     //Properties
     long LastTimeActive() {
@@ -43,37 +38,8 @@ class Button {
     }
 
     //Functions
-    uint8_t Read() {
-      uint8_t returnValue = 0;
-      uint8_t readState = (*pin & (1 << location));
-      if (readState != lastState) lastDebounceTime = millis();
-      if (millis() - lastDebounceTime > 50) {
-        if (readState != state) {
-          state = readState;
-          if (state) {
-            lastTimeActive = millis();
-            isSet = true;
-            returnValue = 1;
-          }
-        }
-      }
-      lastState = readState;
-      return (returnValue);
-    }
-
-    void Print() {
-      char string[128] = "";
-      sprintf(string, "Type: Button, Location on register: %i, Location: 0x%x, State: ", location, (int)&pin);
-      if (*pin & (1 << location)) {
-        strcat(string, "On");
-      } else  {
-        strcat(string, "Off");
-      }
-      Serial.println(string);
-    }
+    uint8_t Read();
+    void Print();
 };
-
-//Functions
-
 
 #endif
