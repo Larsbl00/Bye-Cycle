@@ -13,7 +13,11 @@ Lights::Lights(uint8_t locationOnRegister, uint8_t* addressPort, uint8_t* regist
 }
 
 void Lights::Burn(unsigned long wait, unsigned long delay) {
-  timeToBurn = millis() + wait + delay;
+  long burner = millis() + wait + delay;
+  if (timeToBurn < burner) {
+    timeToBurn = burner;
+  }
+  
   if (delay + millis() <= waitTill) {
     waitTill = delay + millis();
   }
