@@ -60,4 +60,6 @@ void loop()
       }
     }
   }
+  receiveMessage();
+  delay(2);
 }
