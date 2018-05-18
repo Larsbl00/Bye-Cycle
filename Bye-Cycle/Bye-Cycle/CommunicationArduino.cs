@@ -1,39 +1,57 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.IO.Ports;
 using System.Linq;
 using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
+using System.Windows.Forms;
+using Int32 = System.Int32;
 
 namespace Bye_Cycle
 {
     class CommunicationArduino
     {
+        private string[] parsedString;
+        private char[] parseChars = {'%', '#'};
+        private string message;
 
+        private SerialPort mySerialPort = new SerialPort();
 
         public CommunicationArduino()
         {
-            new Thread(delegate () {
-                ReadMessage();
-            }).Start();
+            mySerialPort.PortName = "COM3";
+            mySerialPort.BaudRate = 38400;
+            mySerialPort.Parity = Parity.None;
+            mySerialPort.StopBits = StopBits.One;
+            mySerialPort.DataBits = 8;
+            mySerialPort.Handshake = Handshake.None;              
         }
 
         public string ReadMessage()
-        {
-            SerialPort serialPort = new SerialPort();
+        { 
+            if (mySerialPort.IsOpen)
+            {
+                mySerialPort.Close();
+            }
+            mySerialPort.Open();
 
-            serialPort.PortName = "COM3";
-            serialPort.BaudRate = 9600;
-            serialPort.Close();
-            serialPort.Open();
-
-            string message = serialPort.ReadLine();
+          
+            message = mySerialPort.ReadLine();
+            if (message != null)
+            {
+                
+                //parsedString = message.Split(parseChars);
+            }
             
-            serialPort.Close();
+            mySerialPort.Close();
+
+
+
             return message;
-        }
-
-
+            //return parsedString[1];
+        }       
     }
 }
+

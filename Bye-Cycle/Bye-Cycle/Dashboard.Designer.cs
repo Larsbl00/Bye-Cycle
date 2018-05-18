@@ -1,6 +1,6 @@
 ﻿namespace Bye_Cycle
 {
-    partial class Form1
+    partial class Dashboard
     {
         /// <summary>
         /// Required designer variable.
@@ -28,12 +28,12 @@
         /// </summary>
         private void InitializeComponent()
         {
-            System.Windows.Forms.DataVisualization.Charting.ChartArea chartArea5 = new System.Windows.Forms.DataVisualization.Charting.ChartArea();
-            System.Windows.Forms.DataVisualization.Charting.Legend legend5 = new System.Windows.Forms.DataVisualization.Charting.Legend();
-            System.Windows.Forms.DataVisualization.Charting.Series series5 = new System.Windows.Forms.DataVisualization.Charting.Series();
-            System.Windows.Forms.DataVisualization.Charting.ChartArea chartArea6 = new System.Windows.Forms.DataVisualization.Charting.ChartArea();
-            System.Windows.Forms.DataVisualization.Charting.Legend legend6 = new System.Windows.Forms.DataVisualization.Charting.Legend();
-            System.Windows.Forms.DataVisualization.Charting.Series series6 = new System.Windows.Forms.DataVisualization.Charting.Series();
+            System.Windows.Forms.DataVisualization.Charting.ChartArea chartArea1 = new System.Windows.Forms.DataVisualization.Charting.ChartArea();
+            System.Windows.Forms.DataVisualization.Charting.Legend legend1 = new System.Windows.Forms.DataVisualization.Charting.Legend();
+            System.Windows.Forms.DataVisualization.Charting.Series series1 = new System.Windows.Forms.DataVisualization.Charting.Series();
+            System.Windows.Forms.DataVisualization.Charting.ChartArea chartArea2 = new System.Windows.Forms.DataVisualization.Charting.ChartArea();
+            System.Windows.Forms.DataVisualization.Charting.Legend legend2 = new System.Windows.Forms.DataVisualization.Charting.Legend();
+            System.Windows.Forms.DataVisualization.Charting.Series series2 = new System.Windows.Forms.DataVisualization.Charting.Series();
             this.groupBoxIO = new System.Windows.Forms.GroupBox();
             this.buttonChange = new System.Windows.Forms.Button();
             this.buttonBackup = new System.Windows.Forms.Button();
@@ -42,32 +42,30 @@
             this.listBoxData = new System.Windows.Forms.ListBox();
             this.chart1 = new System.Windows.Forms.DataVisualization.Charting.Chart();
             this.groupBoxData = new System.Windows.Forms.GroupBox();
-            this.directoryEntry1 = new System.DirectoryServices.DirectoryEntry();
             this.backgroundWorker1 = new System.ComponentModel.BackgroundWorker();
-            this.backgroundWorker2 = new System.ComponentModel.BackgroundWorker();
             this.groupBoxFollowSystem = new System.Windows.Forms.GroupBox();
+            this.groupBoxTimeLightsOn = new System.Windows.Forms.GroupBox();
+            this.listBoxTimeLightsOn = new System.Windows.Forms.ListBox();
+            this.labelPrefferedSide = new System.Windows.Forms.Label();
+            this.labelHowManyBikes = new System.Windows.Forms.Label();
             this.buttonBarChart = new System.Windows.Forms.Button();
             this.buttonPieChart = new System.Windows.Forms.Button();
             this.groupBoxTrafficLights = new System.Windows.Forms.GroupBox();
+            this.label1 = new System.Windows.Forms.Label();
+            this.groupBoxTotalTimeRain = new System.Windows.Forms.GroupBox();
+            this.listBoxTotalTimeRain = new System.Windows.Forms.ListBox();
             this.button1 = new System.Windows.Forms.Button();
             this.button2 = new System.Windows.Forms.Button();
             this.chart2 = new System.Windows.Forms.DataVisualization.Charting.Chart();
-            this.labelHowManyBikes = new System.Windows.Forms.Label();
-            this.labelPrefferedSide = new System.Windows.Forms.Label();
-            this.listBoxTimeLightsOn = new System.Windows.Forms.ListBox();
-            this.groupBoxTimeLightsOn = new System.Windows.Forms.GroupBox();
-            this.groupBoxTotalTimeRain = new System.Windows.Forms.GroupBox();
-            this.listBoxTotalTimeRain = new System.Windows.Forms.ListBox();
-            this.label1 = new System.Windows.Forms.Label();
             this.button3 = new System.Windows.Forms.Button();
             this.groupBoxIO.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.chart1)).BeginInit();
             this.groupBoxData.SuspendLayout();
             this.groupBoxFollowSystem.SuspendLayout();
-            this.groupBoxTrafficLights.SuspendLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.chart2)).BeginInit();
             this.groupBoxTimeLightsOn.SuspendLayout();
+            this.groupBoxTrafficLights.SuspendLayout();
             this.groupBoxTotalTimeRain.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.chart2)).BeginInit();
             this.SuspendLayout();
             // 
             // groupBoxIO
@@ -130,17 +128,17 @@
             // 
             // chart1
             // 
-            chartArea5.Name = "ChartArea1";
-            this.chart1.ChartAreas.Add(chartArea5);
-            legend5.Name = "Legend1";
-            this.chart1.Legends.Add(legend5);
+            chartArea1.Name = "ChartArea1";
+            this.chart1.ChartAreas.Add(chartArea1);
+            legend1.Name = "Legend1";
+            this.chart1.Legends.Add(legend1);
             this.chart1.Location = new System.Drawing.Point(6, 26);
             this.chart1.Name = "chart1";
             this.chart1.Palette = System.Windows.Forms.DataVisualization.Charting.ChartColorPalette.Pastel;
-            series5.ChartArea = "ChartArea1";
-            series5.Legend = "Legend1";
-            series5.Name = "Series1";
-            this.chart1.Series.Add(series5);
+            series1.ChartArea = "ChartArea1";
+            series1.Legend = "Legend1";
+            series1.Name = "Series1";
+            this.chart1.Series.Add(series1);
             this.chart1.Size = new System.Drawing.Size(738, 292);
             this.chart1.TabIndex = 2;
             this.chart1.Text = "chart1";
@@ -156,6 +154,10 @@
             this.groupBoxData.TabStop = false;
             this.groupBoxData.Text = "Dates";
             // 
+            // backgroundWorker1
+            // 
+            this.backgroundWorker1.DoWork += new System.ComponentModel.DoWorkEventHandler(this.backgroundWorker1_DoWork_1);
+            // 
             // groupBoxFollowSystem
             // 
             this.groupBoxFollowSystem.Controls.Add(this.groupBoxTimeLightsOn);
@@ -170,6 +172,43 @@
             this.groupBoxFollowSystem.TabIndex = 4;
             this.groupBoxFollowSystem.TabStop = false;
             this.groupBoxFollowSystem.Text = "Follow Light";
+            // 
+            // groupBoxTimeLightsOn
+            // 
+            this.groupBoxTimeLightsOn.Controls.Add(this.listBoxTimeLightsOn);
+            this.groupBoxTimeLightsOn.Location = new System.Drawing.Point(13, 419);
+            this.groupBoxTimeLightsOn.Name = "groupBoxTimeLightsOn";
+            this.groupBoxTimeLightsOn.Size = new System.Drawing.Size(135, 210);
+            this.groupBoxTimeLightsOn.TabIndex = 8;
+            this.groupBoxTimeLightsOn.TabStop = false;
+            this.groupBoxTimeLightsOn.Text = "Time lights on";
+            // 
+            // listBoxTimeLightsOn
+            // 
+            this.listBoxTimeLightsOn.FormattingEnabled = true;
+            this.listBoxTimeLightsOn.ItemHeight = 16;
+            this.listBoxTimeLightsOn.Location = new System.Drawing.Point(6, 21);
+            this.listBoxTimeLightsOn.Name = "listBoxTimeLightsOn";
+            this.listBoxTimeLightsOn.Size = new System.Drawing.Size(120, 180);
+            this.listBoxTimeLightsOn.TabIndex = 7;
+            // 
+            // labelPrefferedSide
+            // 
+            this.labelPrefferedSide.AutoSize = true;
+            this.labelPrefferedSide.Location = new System.Drawing.Point(10, 399);
+            this.labelPrefferedSide.Name = "labelPrefferedSide";
+            this.labelPrefferedSide.Size = new System.Drawing.Size(101, 17);
+            this.labelPrefferedSide.TabIndex = 6;
+            this.labelPrefferedSide.Text = "Preffered side:";
+            // 
+            // labelHowManyBikes
+            // 
+            this.labelHowManyBikes.AutoSize = true;
+            this.labelHowManyBikes.Location = new System.Drawing.Point(7, 378);
+            this.labelHowManyBikes.Name = "labelHowManyBikes";
+            this.labelHowManyBikes.Size = new System.Drawing.Size(114, 17);
+            this.labelHowManyBikes.TabIndex = 5;
+            this.labelHowManyBikes.Text = "How many bikes:";
             // 
             // buttonBarChart
             // 
@@ -203,77 +242,14 @@
             this.groupBoxTrafficLights.TabStop = false;
             this.groupBoxTrafficLights.Text = "Traffic Lights";
             // 
-            // button1
+            // label1
             // 
-            this.button1.Location = new System.Drawing.Point(377, 324);
-            this.button1.Name = "button1";
-            this.button1.Size = new System.Drawing.Size(365, 49);
-            this.button1.TabIndex = 4;
-            this.button1.Text = "Bar chart";
-            this.button1.UseVisualStyleBackColor = true;
-            // 
-            // button2
-            // 
-            this.button2.Location = new System.Drawing.Point(6, 324);
-            this.button2.Name = "button2";
-            this.button2.Size = new System.Drawing.Size(365, 49);
-            this.button2.TabIndex = 3;
-            this.button2.Text = "Pie chart";
-            this.button2.UseVisualStyleBackColor = true;
-            // 
-            // chart2
-            // 
-            chartArea6.Name = "ChartArea1";
-            this.chart2.ChartAreas.Add(chartArea6);
-            legend6.Name = "Legend1";
-            this.chart2.Legends.Add(legend6);
-            this.chart2.Location = new System.Drawing.Point(6, 26);
-            this.chart2.Name = "chart2";
-            this.chart2.Palette = System.Windows.Forms.DataVisualization.Charting.ChartColorPalette.Pastel;
-            series6.ChartArea = "ChartArea1";
-            series6.Legend = "Legend1";
-            series6.Name = "Series1";
-            this.chart2.Series.Add(series6);
-            this.chart2.Size = new System.Drawing.Size(738, 292);
-            this.chart2.TabIndex = 2;
-            this.chart2.Text = "chart2";
-            // 
-            // labelHowManyBikes
-            // 
-            this.labelHowManyBikes.AutoSize = true;
-            this.labelHowManyBikes.Location = new System.Drawing.Point(7, 378);
-            this.labelHowManyBikes.Name = "labelHowManyBikes";
-            this.labelHowManyBikes.Size = new System.Drawing.Size(114, 17);
-            this.labelHowManyBikes.TabIndex = 5;
-            this.labelHowManyBikes.Text = "How many bikes:";
-            // 
-            // labelPrefferedSide
-            // 
-            this.labelPrefferedSide.AutoSize = true;
-            this.labelPrefferedSide.Location = new System.Drawing.Point(10, 399);
-            this.labelPrefferedSide.Name = "labelPrefferedSide";
-            this.labelPrefferedSide.Size = new System.Drawing.Size(101, 17);
-            this.labelPrefferedSide.TabIndex = 6;
-            this.labelPrefferedSide.Text = "Preffered side:";
-            // 
-            // listBoxTimeLightsOn
-            // 
-            this.listBoxTimeLightsOn.FormattingEnabled = true;
-            this.listBoxTimeLightsOn.ItemHeight = 16;
-            this.listBoxTimeLightsOn.Location = new System.Drawing.Point(6, 21);
-            this.listBoxTimeLightsOn.Name = "listBoxTimeLightsOn";
-            this.listBoxTimeLightsOn.Size = new System.Drawing.Size(120, 180);
-            this.listBoxTimeLightsOn.TabIndex = 7;
-            // 
-            // groupBoxTimeLightsOn
-            // 
-            this.groupBoxTimeLightsOn.Controls.Add(this.listBoxTimeLightsOn);
-            this.groupBoxTimeLightsOn.Location = new System.Drawing.Point(13, 419);
-            this.groupBoxTimeLightsOn.Name = "groupBoxTimeLightsOn";
-            this.groupBoxTimeLightsOn.Size = new System.Drawing.Size(135, 210);
-            this.groupBoxTimeLightsOn.TabIndex = 8;
-            this.groupBoxTimeLightsOn.TabStop = false;
-            this.groupBoxTimeLightsOn.Text = "Time lights on";
+            this.label1.AutoSize = true;
+            this.label1.Location = new System.Drawing.Point(12, 387);
+            this.label1.Name = "label1";
+            this.label1.Size = new System.Drawing.Size(184, 17);
+            this.label1.TabIndex = 10;
+            this.label1.Text = "How many bikes priorytised:";
             // 
             // groupBoxTotalTimeRain
             // 
@@ -294,14 +270,40 @@
             this.listBoxTotalTimeRain.Size = new System.Drawing.Size(120, 180);
             this.listBoxTotalTimeRain.TabIndex = 7;
             // 
-            // label1
+            // button1
             // 
-            this.label1.AutoSize = true;
-            this.label1.Location = new System.Drawing.Point(12, 387);
-            this.label1.Name = "label1";
-            this.label1.Size = new System.Drawing.Size(184, 17);
-            this.label1.TabIndex = 10;
-            this.label1.Text = "How many bikes priorytised:";
+            this.button1.Location = new System.Drawing.Point(377, 324);
+            this.button1.Name = "button1";
+            this.button1.Size = new System.Drawing.Size(365, 49);
+            this.button1.TabIndex = 4;
+            this.button1.Text = "Bar chart";
+            this.button1.UseVisualStyleBackColor = true;
+            // 
+            // button2
+            // 
+            this.button2.Location = new System.Drawing.Point(6, 324);
+            this.button2.Name = "button2";
+            this.button2.Size = new System.Drawing.Size(365, 49);
+            this.button2.TabIndex = 3;
+            this.button2.Text = "Pie chart";
+            this.button2.UseVisualStyleBackColor = true;
+            // 
+            // chart2
+            // 
+            chartArea2.Name = "ChartArea1";
+            this.chart2.ChartAreas.Add(chartArea2);
+            legend2.Name = "Legend1";
+            this.chart2.Legends.Add(legend2);
+            this.chart2.Location = new System.Drawing.Point(6, 26);
+            this.chart2.Name = "chart2";
+            this.chart2.Palette = System.Windows.Forms.DataVisualization.Charting.ChartColorPalette.Pastel;
+            series2.ChartArea = "ChartArea1";
+            series2.Legend = "Legend1";
+            series2.Name = "Series1";
+            this.chart2.Series.Add(series2);
+            this.chart2.Size = new System.Drawing.Size(738, 292);
+            this.chart2.TabIndex = 2;
+            this.chart2.Text = "chart2";
             // 
             // button3
             // 
@@ -313,7 +315,7 @@
             this.button3.UseVisualStyleBackColor = true;
             this.button3.Click += new System.EventHandler(this.button3_Click);
             // 
-            // Form1
+            // Dashboard
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
@@ -322,18 +324,18 @@
             this.Controls.Add(this.groupBoxTrafficLights);
             this.Controls.Add(this.groupBoxFollowSystem);
             this.Controls.Add(this.groupBoxData);
-            this.Name = "Form1";
+            this.Name = "Dashboard";
             this.Text = "Dashbord ";
             this.groupBoxIO.ResumeLayout(false);
             ((System.ComponentModel.ISupportInitialize)(this.chart1)).EndInit();
             this.groupBoxData.ResumeLayout(false);
             this.groupBoxFollowSystem.ResumeLayout(false);
             this.groupBoxFollowSystem.PerformLayout();
+            this.groupBoxTimeLightsOn.ResumeLayout(false);
             this.groupBoxTrafficLights.ResumeLayout(false);
             this.groupBoxTrafficLights.PerformLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.chart2)).EndInit();
-            this.groupBoxTimeLightsOn.ResumeLayout(false);
             this.groupBoxTotalTimeRain.ResumeLayout(false);
+            ((System.ComponentModel.ISupportInitialize)(this.chart2)).EndInit();
             this.ResumeLayout(false);
 
         }
@@ -347,9 +349,7 @@
         private System.Windows.Forms.ListBox listBoxData;
         private System.Windows.Forms.DataVisualization.Charting.Chart chart1;
         private System.Windows.Forms.GroupBox groupBoxData;
-        private System.DirectoryServices.DirectoryEntry directoryEntry1;
         private System.ComponentModel.BackgroundWorker backgroundWorker1;
-        private System.ComponentModel.BackgroundWorker backgroundWorker2;
         private System.Windows.Forms.GroupBox groupBoxFollowSystem;
         private System.Windows.Forms.Button buttonBarChart;
         private System.Windows.Forms.Button buttonPieChart;
