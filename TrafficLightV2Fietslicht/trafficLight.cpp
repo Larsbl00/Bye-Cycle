@@ -3,7 +3,8 @@
 
 char currentState;
 char lastState;
-long timerInterval;
+char receivedState;
+
 //----------------------------------------------
 char CurrentState() {
   return currentState;
@@ -11,9 +12,10 @@ char CurrentState() {
 char LastState() {
   return lastState;
 }
-long TimerInterval(){
-  return timerInterval;
+char ReceivedState() {
+  return receivedState;
 }
+
 //----------------------------------------------
 void CurrentState(char value)
 {
@@ -23,13 +25,12 @@ void LastState(char value)
 {
   lastState = value;
 }
-void TimerInterval(long value)
+void ReceivedState(char value)
 {
-  timerInterval = value;
+  receivedState = value;
 }
+
 //----------------------------------------------
-
-
 
 void modes(char state) {
 

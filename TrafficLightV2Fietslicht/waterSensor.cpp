@@ -2,28 +2,39 @@
 #include <Wire.h>
 #include <Arduino.h>
 
-#define rainSensor A0 
 /*-------------------------------------------------------------*/
 //Water sensor Hoya
 //
 //
 /*-------------------------------------------------------------*/
+long timerInterval;
 
-int waterSensor_measurement_mode(int *sensorValue)
+long TimerInterval() {
+  return timerInterval;
+}
+
+void TimerInterval(long value)
 {
-  
-  *sensorValue = analogRead(rainSensor);
-  Serial.println(*sensorValue);
+  timerInterval = value;
 }
 
-int waterSensor_change_interval(int *sensorValue, long *timer){
+void waterSensor_measurement_mode()
+{
+  int sensorValue = analogRead(rainSensor);
+  waterSensor_change_interval(sensorValue);
+}
 
-  if(*sensorValue< 100)
-  {   
-    *timer = 100;    
+void waterSensor_change_interval(int sensorValue) {
+
+  if (sensorValue > 100)
+  {
+    TimerInterval(rainTime);
   }
-  else{ 
-     timer = 5000;    
+  else 
+  {
+    TimerInterval(standardTime);
   }
 }
+
+
 

@@ -1,7 +1,6 @@
 #include "trafficLight.h"
 #include "communicationI2C.h"
-char state = 'r';
-
+#include "waterSensor.h"
 unsigned long previousMillis = 1000;
 
 void setup() {
@@ -14,33 +13,58 @@ void setup() {
   Serial.println("----------------------------------------------------");
   Serial.println("Serial is online");
   Serial.println("----------------------------------------------------");
+  CurrentState('g');
+  TimerInterval(2000);
 }
 
 void loop()
 {
-//default mode mode('r');
   unsigned long currentMillis = millis();
-  TimerInterval(1000);
+
+  receiveMessage();
+  delay(2);
+  sendMessage(CurrentState());
+  delay(2);
+  
+  waterSensor_measurement_mode();
+  unsigned int timerInterval = standardTime;
+  
   if (currentMillis - previousMillis >= TimerInterval())
   {
     previousMillis = currentMillis;
 
-    if (state == 'r') {
-      state = 'o';
-      sendMessage(&state);
-     // modes(&state);
+    if (ReceivedState() == 'g' || ReceivedState() == 'o' )
+    {
+      switchStates('r');
+      modes(CurrentState());
     }
-    else if (state == 'o') {
-      state = 'g';
-      sendMessage(&state);
-      //modes(&state);
+
+    else if (ReceivedState() == 'r')
+    {
+      if (CurrentState() == 'o' || CurrentState() == NULL)
+      {
+        switchStates('r');
+        modes(CurrentState());
+      }
+      else if (CurrentState() == 'r' )
+      {
+        switchStates('g');
+        modes(CurrentState());
+        timerInterval = TimerInterval();
+        sendMessage(TimerInterval());
+        delay(2);
+      }
+      else if (CurrentState() == 'g' )
+      {
+        switchStates('o');
+        modes(CurrentState());
+      } 
     }
-    else if  (state == 'g') {
-      state = 'r';
-      sendMessage(&state);
-    //  modes(&state);
-    }
+    sendMessage(timerInterval);
+    delay(2);
   }
-
-
 }
+
+
+
+

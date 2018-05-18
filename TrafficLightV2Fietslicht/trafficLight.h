@@ -7,11 +7,11 @@
 
 char CurrentState();
 char LastState();
-long TimerInterval();
+char ReceivedState();
 
 void CurrentState(char value);
 void LastState(char value);
-void TimerInterval(long value);
+void ReceivedState(char value);
 
 void modes(char state);
 

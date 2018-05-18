@@ -1,6 +1,12 @@
 #ifndef _WATERSENSOR_H
 #define _WATERSENSOR_H
+#define rainSensor A0
+#define standardTime 2000
+#define rainTime 200
+void waterSensor_measurement_mode();
+void waterSensor_change_interval(int sensorValue);
 
-int waterSensor_measurement_mode(int *sensorValue);
-int waterSensor_change_interval(int *sensorValue, long *timer);
+long TimerInterval();
+void TimerInterval(long value);
+
 #endif
