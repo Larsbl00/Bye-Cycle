@@ -20,13 +20,14 @@ void setup() {
 void loop()
 {
   unsigned long currentMillis = millis();
-
+  
   receiveMessage();
   delay(2);
   sendMessage(CurrentState());
   delay(2);
   
   waterSensor_measurement_mode();
+  
   unsigned int timerInterval = standardTime;
   
   if (currentMillis - previousMillis >= TimerInterval())

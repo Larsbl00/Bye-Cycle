@@ -1,7 +1,7 @@
 #include "waterSensor.h"
 #include <Wire.h>
 #include <Arduino.h>
-
+#include "protocol.h" 
 /*-------------------------------------------------------------*/
 //Water sensor Hoya
 //
@@ -29,6 +29,7 @@ void waterSensor_change_interval(int sensorValue) {
   if (sensorValue > 100)
   {
     TimerInterval(rainTime);
+    SendProtocol('D',"IsRaining",1);
   }
   else 
   {
