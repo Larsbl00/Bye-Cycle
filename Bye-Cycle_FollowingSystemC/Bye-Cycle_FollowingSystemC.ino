@@ -7,13 +7,13 @@
 #define ldr A0
 
 //Located on pins 2, 4, 7, 8
-Lights lights[] = {Lights (2, &PORTD, &DDRD), Lights(4, &PORTD, &DDRD), Lights(7, &PORTD, &DDRD), Lights(0, &PORTB, &DDRB)};
+Lights lights[4] = {CreateLights(2, &PORTD, &DDRD), CreateLights(4, &PORTD, &DDRD), CreateLights(7, &PORTD, &DDRD), CreateLights(0, &PORTB, &DDRB)};
 
-//Located on pins 10, 11 
-Button buttons1[] = {Button(2, &PINB, &DDRB), Button(3, &PINB, &DDRB)};
+//Located on pins 10, 11
+Button buttons1[] = {CreateButton(2, &PINB, &DDRB), CreateButton(3, &PINB, &DDRB)};
 
 //Located on pins 5, 6
-Button buttons2[] = {Button(5, &PIND, &DDRD), Button(6, &PIND, &DDRD)};
+Button buttons2[] = {CreateButton(5, &PIND, &DDRD), CreateButton(6, &PIND, &DDRD)};
 
 bool systemIsOn = true;
 bool lastTimeSystemOn;
@@ -32,7 +32,7 @@ void serialEvent() {
   if (serialInput != "" && serialInput.charAt(0) == '%' && serialInput.charAt(1) == 'F' && serialInput.indexOf('#') != -1) {
     String varToChange = serialInput.substring(3, serialInput.indexOf('-'));
     uint8_t value = serialInput.substring(serialInput.indexOf('-') + 1, serialInput.indexOf('#')).toInt();
-    //Sample turn-on protocol: %F:followOff-0# 
+    //Sample turn-on protocol: %F:followOff-0#
     if (varToChange == "followOff") {
       systemIsOn = !(bool)value;
     }
@@ -42,13 +42,6 @@ void serialEvent() {
 void setup() {
   Serial.begin(38400);
   pinMode(13, OUTPUT);
-
-  //Prints all items, this is for debugging purposes
-  PrintLights(lights, lightsSize);
-  buttons1[0].Print();
-  buttons1[1].Print();
-  buttons2[0].Print();
-  buttons2[1].Print();
 }
 
 void loop() {
@@ -61,7 +54,7 @@ void loop() {
       CheckButtonSet(buttons2, 2, lights, lightsSize);
     } else {
       for (int i = 0; i < lightsSize; i++) {
-        lights[i].Burn(1, 0);
+        Burn(&lights[i], 1, 0);
       }
     }
   }

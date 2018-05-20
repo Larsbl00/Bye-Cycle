@@ -1,13 +1,13 @@
 #ifndef BUTTON_H
 #define BUTTON_H
 
-//These distances are the distance in cm
-#define DistanceBetweenButtonsInPair 1
-#define DistanceBetweenLightPosts 4
-
 #include <stdint.h>
 #include <stdio.h>
 #include "lights.h"
+
+//These distances are the distances in cm
+#define DistanceBetweenButtonsInPair 1
+#define DistanceBetweenLightPosts 4
 
 
 class Button {
@@ -20,15 +20,7 @@ class Button {
     unsigned long lastDebounceTime = 0;
     unsigned long lastTimeActive;
 
-
   public:
-    //Constructor
-    Button(uint8_t locationOnRegister, uint8_t* addressPin, uint8_t* registerButton) {
-      pin = addressPin;
-      location = locationOnRegister;
-      *registerButton &= ~(1 << location);
-    }
-
     //Properties
     long LastTimeActive() {
       return lastTimeActive;
@@ -42,38 +34,21 @@ class Button {
       isSet = value;
     }
 
-    //Functions
-    uint8_t Read() {
-      uint8_t returnValue = 0;
-      uint8_t readState = (*pin & (1 << location));
-      if (readState != lastState) lastDebounceTime = millis();
-      if (millis() - lastDebounceTime > 50) {
-        if (readState != state) {
-          state = readState;
-          if (state) {
-            lastTimeActive = millis();
-            isSet = true;
-            returnValue = 1;
-          }
-        }
-      }
-      lastState = readState;
-      return (returnValue);
-    }
+    //Constructor
+    Button(uint8_t locationOnRegister, uint8_t* addressPin, uint8_t* registerButton);
 
-    void Print() {
-      char string[256] = "";
-      sprintf(string, "Type: Button, Location on register: %i, Location: 0x%x, State: ", location, (int)&pin);
-      if (*pin & (1 << location)) {
-        strcat(string, "On");
-      } else  {
-        strcat(string, "Off");
-      }
-      Serial.println(string);
-    }
+    //Functions
+    uint8_t Read();
+    void Print();
 };
 
-//Functions
-
+//Checks the state of all buttons, and sends the protocols when needed
+//
+//@param buttons: This is the array of buttons we're checking
+//@param arraySize: This is the Size of the array so we don't go out of bounds
+//@param lights: This is the array of lights that needs to be triggered
+//@param lightsSzie: This is the size of the lights array, so we don't go out of bounds
+//
+void CheckButtonSet(Button* buttons, int arraySize, Lights* lights, int lightsSize);
 
 #endif
