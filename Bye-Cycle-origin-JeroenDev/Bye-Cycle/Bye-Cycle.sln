@@ -1,0 +1,25 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio 15
+VisualStudioVersion = 15.0.27004.2009
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Bye-Cycle", "Bye-Cycle\Bye-Cycle.csproj", "{8B5718D2-72FC-4F15-95C4-17EA2A410AF3}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{8B5718D2-72FC-4F15-95C4-17EA2A410AF3}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{8B5718D2-72FC-4F15-95C4-17EA2A410AF3}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{8B5718D2-72FC-4F15-95C4-17EA2A410AF3}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{8B5718D2-72FC-4F15-95C4-17EA2A410AF3}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {01EDF27F-8559-4682-B500-14AA1B1D4638}
+	EndGlobalSection
+EndGlobal
