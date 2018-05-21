@@ -12,18 +12,31 @@ namespace Bye_Cycle
     {
 
         public List<Data> data { get; private set; }
-        private CommunicationArduino communicationArduino;
+        public List<string> Test { get; private set; }
         private Parser parser;
-        private string command;
+        private string[] command;
         public Administration()
         {
             data  = new List<Data>();
             parser = new Parser();
+            Test = new List<string>();
         }
 
-        public string ReadMessage()
+        public void ReadMessage()
         {
             command = parser.ParseArduinoData();
+
+            if(command != null)
+            {
+                Test.Add(command[0]);
+
+                checkIfDateExist();
+            }
+
+
+
+
+            /*
             if (command[0] != null)
             {
                 return command;
@@ -32,8 +45,6 @@ namespace Bye_Cycle
             {
                 return "Nothing found";
             }
-            
-            /*
             switch (command[0])
             {
                 case "direction":

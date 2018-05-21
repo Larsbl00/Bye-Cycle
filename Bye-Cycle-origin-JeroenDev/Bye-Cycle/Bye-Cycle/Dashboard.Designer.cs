@@ -28,6 +28,7 @@
         /// </summary>
         private void InitializeComponent()
         {
+            this.components = new System.ComponentModel.Container();
             System.Windows.Forms.DataVisualization.Charting.ChartArea chartArea1 = new System.Windows.Forms.DataVisualization.Charting.ChartArea();
             System.Windows.Forms.DataVisualization.Charting.Legend legend1 = new System.Windows.Forms.DataVisualization.Charting.Legend();
             System.Windows.Forms.DataVisualization.Charting.Series series1 = new System.Windows.Forms.DataVisualization.Charting.Series();
@@ -58,6 +59,7 @@
             this.button2 = new System.Windows.Forms.Button();
             this.chart2 = new System.Windows.Forms.DataVisualization.Charting.Chart();
             this.button3 = new System.Windows.Forms.Button();
+            this.timerUpdateForm = new System.Windows.Forms.Timer(this.components);
             this.groupBoxIO.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.chart1)).BeginInit();
             this.groupBoxData.SuspendLayout();
@@ -74,45 +76,51 @@
             this.groupBoxIO.Controls.Add(this.buttonBackup);
             this.groupBoxIO.Controls.Add(this.buttonDelete);
             this.groupBoxIO.Controls.Add(this.buttonSave);
-            this.groupBoxIO.Location = new System.Drawing.Point(6, 276);
+            this.groupBoxIO.Location = new System.Drawing.Point(4, 224);
+            this.groupBoxIO.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
             this.groupBoxIO.Name = "groupBoxIO";
-            this.groupBoxIO.Size = new System.Drawing.Size(192, 95);
+            this.groupBoxIO.Padding = new System.Windows.Forms.Padding(2, 2, 2, 2);
+            this.groupBoxIO.Size = new System.Drawing.Size(144, 77);
             this.groupBoxIO.TabIndex = 0;
             this.groupBoxIO.TabStop = false;
             this.groupBoxIO.Text = "IO";
             // 
             // buttonChange
             // 
-            this.buttonChange.Location = new System.Drawing.Point(97, 56);
+            this.buttonChange.Location = new System.Drawing.Point(73, 46);
+            this.buttonChange.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
             this.buttonChange.Name = "buttonChange";
-            this.buttonChange.Size = new System.Drawing.Size(89, 30);
+            this.buttonChange.Size = new System.Drawing.Size(67, 24);
             this.buttonChange.TabIndex = 3;
             this.buttonChange.Text = "Change";
             this.buttonChange.UseVisualStyleBackColor = true;
             // 
             // buttonBackup
             // 
-            this.buttonBackup.Location = new System.Drawing.Point(6, 57);
+            this.buttonBackup.Location = new System.Drawing.Point(4, 46);
+            this.buttonBackup.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
             this.buttonBackup.Name = "buttonBackup";
-            this.buttonBackup.Size = new System.Drawing.Size(85, 30);
+            this.buttonBackup.Size = new System.Drawing.Size(64, 24);
             this.buttonBackup.TabIndex = 2;
             this.buttonBackup.Text = "Backup";
             this.buttonBackup.UseVisualStyleBackColor = true;
             // 
             // buttonDelete
             // 
-            this.buttonDelete.Location = new System.Drawing.Point(97, 21);
+            this.buttonDelete.Location = new System.Drawing.Point(73, 17);
+            this.buttonDelete.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
             this.buttonDelete.Name = "buttonDelete";
-            this.buttonDelete.Size = new System.Drawing.Size(89, 30);
+            this.buttonDelete.Size = new System.Drawing.Size(67, 24);
             this.buttonDelete.TabIndex = 1;
             this.buttonDelete.Text = "Delete";
             this.buttonDelete.UseVisualStyleBackColor = true;
             // 
             // buttonSave
             // 
-            this.buttonSave.Location = new System.Drawing.Point(6, 21);
+            this.buttonSave.Location = new System.Drawing.Point(4, 17);
+            this.buttonSave.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
             this.buttonSave.Name = "buttonSave";
-            this.buttonSave.Size = new System.Drawing.Size(85, 30);
+            this.buttonSave.Size = new System.Drawing.Size(64, 24);
             this.buttonSave.TabIndex = 0;
             this.buttonSave.Text = "Save";
             this.buttonSave.UseVisualStyleBackColor = true;
@@ -120,10 +128,10 @@
             // listBoxData
             // 
             this.listBoxData.FormattingEnabled = true;
-            this.listBoxData.ItemHeight = 16;
-            this.listBoxData.Location = new System.Drawing.Point(6, 26);
+            this.listBoxData.Location = new System.Drawing.Point(4, 21);
+            this.listBoxData.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
             this.listBoxData.Name = "listBoxData";
-            this.listBoxData.Size = new System.Drawing.Size(192, 244);
+            this.listBoxData.Size = new System.Drawing.Size(145, 199);
             this.listBoxData.TabIndex = 1;
             // 
             // chart1
@@ -132,14 +140,15 @@
             this.chart1.ChartAreas.Add(chartArea1);
             legend1.Name = "Legend1";
             this.chart1.Legends.Add(legend1);
-            this.chart1.Location = new System.Drawing.Point(6, 26);
+            this.chart1.Location = new System.Drawing.Point(4, 21);
+            this.chart1.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
             this.chart1.Name = "chart1";
             this.chart1.Palette = System.Windows.Forms.DataVisualization.Charting.ChartColorPalette.Pastel;
             series1.ChartArea = "ChartArea1";
             series1.Legend = "Legend1";
             series1.Name = "Series1";
             this.chart1.Series.Add(series1);
-            this.chart1.Size = new System.Drawing.Size(738, 292);
+            this.chart1.Size = new System.Drawing.Size(554, 237);
             this.chart1.TabIndex = 2;
             this.chart1.Text = "chart1";
             // 
@@ -147,9 +156,11 @@
             // 
             this.groupBoxData.Controls.Add(this.listBoxData);
             this.groupBoxData.Controls.Add(this.groupBoxIO);
-            this.groupBoxData.Location = new System.Drawing.Point(13, 13);
+            this.groupBoxData.Location = new System.Drawing.Point(10, 11);
+            this.groupBoxData.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
             this.groupBoxData.Name = "groupBoxData";
-            this.groupBoxData.Size = new System.Drawing.Size(204, 379);
+            this.groupBoxData.Padding = new System.Windows.Forms.Padding(2, 2, 2, 2);
+            this.groupBoxData.Size = new System.Drawing.Size(153, 308);
             this.groupBoxData.TabIndex = 3;
             this.groupBoxData.TabStop = false;
             this.groupBoxData.Text = "Dates";
@@ -166,9 +177,11 @@
             this.groupBoxFollowSystem.Controls.Add(this.buttonBarChart);
             this.groupBoxFollowSystem.Controls.Add(this.buttonPieChart);
             this.groupBoxFollowSystem.Controls.Add(this.chart1);
-            this.groupBoxFollowSystem.Location = new System.Drawing.Point(224, 13);
+            this.groupBoxFollowSystem.Location = new System.Drawing.Point(168, 11);
+            this.groupBoxFollowSystem.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
             this.groupBoxFollowSystem.Name = "groupBoxFollowSystem";
-            this.groupBoxFollowSystem.Size = new System.Drawing.Size(750, 718);
+            this.groupBoxFollowSystem.Padding = new System.Windows.Forms.Padding(2, 2, 2, 2);
+            this.groupBoxFollowSystem.Size = new System.Drawing.Size(562, 583);
             this.groupBoxFollowSystem.TabIndex = 4;
             this.groupBoxFollowSystem.TabStop = false;
             this.groupBoxFollowSystem.Text = "Follow Light";
@@ -176,9 +189,11 @@
             // groupBoxTimeLightsOn
             // 
             this.groupBoxTimeLightsOn.Controls.Add(this.listBoxTimeLightsOn);
-            this.groupBoxTimeLightsOn.Location = new System.Drawing.Point(13, 419);
+            this.groupBoxTimeLightsOn.Location = new System.Drawing.Point(10, 340);
+            this.groupBoxTimeLightsOn.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
             this.groupBoxTimeLightsOn.Name = "groupBoxTimeLightsOn";
-            this.groupBoxTimeLightsOn.Size = new System.Drawing.Size(135, 210);
+            this.groupBoxTimeLightsOn.Padding = new System.Windows.Forms.Padding(2, 2, 2, 2);
+            this.groupBoxTimeLightsOn.Size = new System.Drawing.Size(101, 171);
             this.groupBoxTimeLightsOn.TabIndex = 8;
             this.groupBoxTimeLightsOn.TabStop = false;
             this.groupBoxTimeLightsOn.Text = "Time lights on";
@@ -186,44 +201,48 @@
             // listBoxTimeLightsOn
             // 
             this.listBoxTimeLightsOn.FormattingEnabled = true;
-            this.listBoxTimeLightsOn.ItemHeight = 16;
-            this.listBoxTimeLightsOn.Location = new System.Drawing.Point(6, 21);
+            this.listBoxTimeLightsOn.Location = new System.Drawing.Point(4, 17);
+            this.listBoxTimeLightsOn.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
             this.listBoxTimeLightsOn.Name = "listBoxTimeLightsOn";
-            this.listBoxTimeLightsOn.Size = new System.Drawing.Size(120, 180);
+            this.listBoxTimeLightsOn.Size = new System.Drawing.Size(91, 147);
             this.listBoxTimeLightsOn.TabIndex = 7;
             // 
             // labelPrefferedSide
             // 
             this.labelPrefferedSide.AutoSize = true;
-            this.labelPrefferedSide.Location = new System.Drawing.Point(10, 399);
+            this.labelPrefferedSide.Location = new System.Drawing.Point(8, 324);
+            this.labelPrefferedSide.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
             this.labelPrefferedSide.Name = "labelPrefferedSide";
-            this.labelPrefferedSide.Size = new System.Drawing.Size(101, 17);
+            this.labelPrefferedSide.Size = new System.Drawing.Size(75, 13);
             this.labelPrefferedSide.TabIndex = 6;
             this.labelPrefferedSide.Text = "Preffered side:";
             // 
             // labelHowManyBikes
             // 
             this.labelHowManyBikes.AutoSize = true;
-            this.labelHowManyBikes.Location = new System.Drawing.Point(7, 378);
+            this.labelHowManyBikes.Location = new System.Drawing.Point(5, 307);
+            this.labelHowManyBikes.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
             this.labelHowManyBikes.Name = "labelHowManyBikes";
-            this.labelHowManyBikes.Size = new System.Drawing.Size(114, 17);
+            this.labelHowManyBikes.Size = new System.Drawing.Size(88, 13);
             this.labelHowManyBikes.TabIndex = 5;
             this.labelHowManyBikes.Text = "How many bikes:";
             // 
             // buttonBarChart
             // 
-            this.buttonBarChart.Location = new System.Drawing.Point(377, 324);
+            this.buttonBarChart.Location = new System.Drawing.Point(283, 263);
+            this.buttonBarChart.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
             this.buttonBarChart.Name = "buttonBarChart";
-            this.buttonBarChart.Size = new System.Drawing.Size(365, 47);
+            this.buttonBarChart.Size = new System.Drawing.Size(274, 38);
             this.buttonBarChart.TabIndex = 4;
             this.buttonBarChart.Text = "Bar chart";
             this.buttonBarChart.UseVisualStyleBackColor = true;
             // 
             // buttonPieChart
             // 
-            this.buttonPieChart.Location = new System.Drawing.Point(6, 324);
+            this.buttonPieChart.Location = new System.Drawing.Point(4, 263);
+            this.buttonPieChart.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
             this.buttonPieChart.Name = "buttonPieChart";
-            this.buttonPieChart.Size = new System.Drawing.Size(365, 47);
+            this.buttonPieChart.Size = new System.Drawing.Size(274, 38);
             this.buttonPieChart.TabIndex = 3;
             this.buttonPieChart.Text = "Pie chart";
             this.buttonPieChart.UseVisualStyleBackColor = true;
@@ -235,9 +254,11 @@
             this.groupBoxTrafficLights.Controls.Add(this.button1);
             this.groupBoxTrafficLights.Controls.Add(this.button2);
             this.groupBoxTrafficLights.Controls.Add(this.chart2);
-            this.groupBoxTrafficLights.Location = new System.Drawing.Point(980, 13);
+            this.groupBoxTrafficLights.Location = new System.Drawing.Point(735, 11);
+            this.groupBoxTrafficLights.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
             this.groupBoxTrafficLights.Name = "groupBoxTrafficLights";
-            this.groupBoxTrafficLights.Size = new System.Drawing.Size(750, 718);
+            this.groupBoxTrafficLights.Padding = new System.Windows.Forms.Padding(2, 2, 2, 2);
+            this.groupBoxTrafficLights.Size = new System.Drawing.Size(562, 583);
             this.groupBoxTrafficLights.TabIndex = 5;
             this.groupBoxTrafficLights.TabStop = false;
             this.groupBoxTrafficLights.Text = "Traffic Lights";
@@ -245,18 +266,21 @@
             // label1
             // 
             this.label1.AutoSize = true;
-            this.label1.Location = new System.Drawing.Point(12, 387);
+            this.label1.Location = new System.Drawing.Point(9, 314);
+            this.label1.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
             this.label1.Name = "label1";
-            this.label1.Size = new System.Drawing.Size(184, 17);
+            this.label1.Size = new System.Drawing.Size(138, 13);
             this.label1.TabIndex = 10;
             this.label1.Text = "How many bikes priorytised:";
             // 
             // groupBoxTotalTimeRain
             // 
             this.groupBoxTotalTimeRain.Controls.Add(this.listBoxTotalTimeRain);
-            this.groupBoxTotalTimeRain.Location = new System.Drawing.Point(6, 419);
+            this.groupBoxTotalTimeRain.Location = new System.Drawing.Point(4, 340);
+            this.groupBoxTotalTimeRain.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
             this.groupBoxTotalTimeRain.Name = "groupBoxTotalTimeRain";
-            this.groupBoxTotalTimeRain.Size = new System.Drawing.Size(135, 210);
+            this.groupBoxTotalTimeRain.Padding = new System.Windows.Forms.Padding(2, 2, 2, 2);
+            this.groupBoxTotalTimeRain.Size = new System.Drawing.Size(101, 171);
             this.groupBoxTotalTimeRain.TabIndex = 9;
             this.groupBoxTotalTimeRain.TabStop = false;
             this.groupBoxTotalTimeRain.Text = "Total time rain";
@@ -264,26 +288,28 @@
             // listBoxTotalTimeRain
             // 
             this.listBoxTotalTimeRain.FormattingEnabled = true;
-            this.listBoxTotalTimeRain.ItemHeight = 16;
-            this.listBoxTotalTimeRain.Location = new System.Drawing.Point(6, 21);
+            this.listBoxTotalTimeRain.Location = new System.Drawing.Point(4, 17);
+            this.listBoxTotalTimeRain.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
             this.listBoxTotalTimeRain.Name = "listBoxTotalTimeRain";
-            this.listBoxTotalTimeRain.Size = new System.Drawing.Size(120, 180);
+            this.listBoxTotalTimeRain.Size = new System.Drawing.Size(91, 147);
             this.listBoxTotalTimeRain.TabIndex = 7;
             // 
             // button1
             // 
-            this.button1.Location = new System.Drawing.Point(377, 324);
+            this.button1.Location = new System.Drawing.Point(283, 263);
+            this.button1.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
             this.button1.Name = "button1";
-            this.button1.Size = new System.Drawing.Size(365, 49);
+            this.button1.Size = new System.Drawing.Size(274, 40);
             this.button1.TabIndex = 4;
             this.button1.Text = "Bar chart";
             this.button1.UseVisualStyleBackColor = true;
             // 
             // button2
             // 
-            this.button2.Location = new System.Drawing.Point(6, 324);
+            this.button2.Location = new System.Drawing.Point(4, 263);
+            this.button2.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
             this.button2.Name = "button2";
-            this.button2.Size = new System.Drawing.Size(365, 49);
+            this.button2.Size = new System.Drawing.Size(274, 40);
             this.button2.TabIndex = 3;
             this.button2.Text = "Pie chart";
             this.button2.UseVisualStyleBackColor = true;
@@ -294,36 +320,45 @@
             this.chart2.ChartAreas.Add(chartArea2);
             legend2.Name = "Legend1";
             this.chart2.Legends.Add(legend2);
-            this.chart2.Location = new System.Drawing.Point(6, 26);
+            this.chart2.Location = new System.Drawing.Point(4, 21);
+            this.chart2.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
             this.chart2.Name = "chart2";
             this.chart2.Palette = System.Windows.Forms.DataVisualization.Charting.ChartColorPalette.Pastel;
             series2.ChartArea = "ChartArea1";
             series2.Legend = "Legend1";
             series2.Name = "Series1";
             this.chart2.Series.Add(series2);
-            this.chart2.Size = new System.Drawing.Size(738, 292);
+            this.chart2.Size = new System.Drawing.Size(554, 237);
             this.chart2.TabIndex = 2;
             this.chart2.Text = "chart2";
             // 
             // button3
             // 
-            this.button3.Location = new System.Drawing.Point(13, 405);
+            this.button3.Location = new System.Drawing.Point(10, 329);
+            this.button3.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
             this.button3.Name = "button3";
-            this.button3.Size = new System.Drawing.Size(75, 23);
+            this.button3.Size = new System.Drawing.Size(56, 19);
             this.button3.TabIndex = 6;
             this.button3.Text = "button3";
             this.button3.UseVisualStyleBackColor = true;
             this.button3.Click += new System.EventHandler(this.button3_Click);
             // 
+            // timerUpdateForm
+            // 
+            this.timerUpdateForm.Enabled = true;
+            this.timerUpdateForm.Interval = 5000;
+            this.timerUpdateForm.Tick += new System.EventHandler(this.timer1_Tick);
+            // 
             // Dashboard
             // 
-            this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
+            this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(1743, 743);
+            this.ClientSize = new System.Drawing.Size(1307, 604);
             this.Controls.Add(this.button3);
             this.Controls.Add(this.groupBoxTrafficLights);
             this.Controls.Add(this.groupBoxFollowSystem);
             this.Controls.Add(this.groupBoxData);
+            this.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
             this.Name = "Dashboard";
             this.Text = "Dashbord ";
             this.groupBoxIO.ResumeLayout(false);
@@ -366,6 +401,7 @@
         private System.Windows.Forms.GroupBox groupBoxTotalTimeRain;
         private System.Windows.Forms.ListBox listBoxTotalTimeRain;
         private System.Windows.Forms.Button button3;
+        private System.Windows.Forms.Timer timerUpdateForm;
     }
 }
 

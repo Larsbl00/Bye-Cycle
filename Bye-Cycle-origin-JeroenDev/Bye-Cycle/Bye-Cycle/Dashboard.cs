@@ -20,6 +20,7 @@ namespace Bye_Cycle
             InitializeComponent();
             administration = new Administration();
             MainThread = Thread.CurrentThread;
+            backgroundWorker1.RunWorkerAsync();
 
         }
 
@@ -27,27 +28,37 @@ namespace Bye_Cycle
         {
             while (true)
             {
-                this.Invoke(new MethodInvoker(delegate {
-                    // Execute the following code on the GUI thread.
-                    listBoxData.Items.Add(administration.ReadMessage());
-                }));
+                administration.ReadMessage();
             }
         }
         private void button3_Click(object sender, EventArgs e)
         {
-
-            backgroundWorker1.RunWorkerAsync();
             UpdateForm();
         }
 
         private void UpdateForm()
         {
-            foreach (Data data in administration.data)
+            listBoxData.Items.Clear();
+            try
             {
-                listBoxData.Items.Add(data.Date);
+                foreach (string command in administration.Test)
+                {
+                    if (command != null)
+                    {
+                        listBoxData.Items.Add(command);
+                    }
+                }
             }
+            catch (InvalidOperationException e)
+            {
+
+            }
+            
         }
 
-
+        private void timer1_Tick(object sender, EventArgs e)
+        {
+            UpdateForm();
+        }
     }
 }

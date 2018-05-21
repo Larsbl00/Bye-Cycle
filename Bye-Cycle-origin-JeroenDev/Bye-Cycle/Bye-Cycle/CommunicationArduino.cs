@@ -18,6 +18,7 @@ namespace Bye_Cycle
         private string message;
 
         private SerialPort mySerialPort = new SerialPort();
+        private SerialPort spL;
 
         public CommunicationArduino()
         {
@@ -26,32 +27,34 @@ namespace Bye_Cycle
             mySerialPort.Parity = Parity.None;
             mySerialPort.StopBits = StopBits.One;
             mySerialPort.DataBits = 8;
-            mySerialPort.Handshake = Handshake.None;              
+            mySerialPort.Handshake = Handshake.None;
+            mySerialPort.ReceivedBytesThreshold = 6;
+            mySerialPort.DtrEnable = false;
+            mySerialPort.RtsEnable = false;
         }
 
         public string ReadMessage()
-        { 
+        {   
             if (mySerialPort.IsOpen)
             {
                 mySerialPort.Close();
             }
             mySerialPort.Open();
 
-          
             message = mySerialPort.ReadLine();
-            if (message != null)
-            {
-                
-                //parsedString = message.Split(parseChars);
-            }
-            
             mySerialPort.Close();
 
 
-
-            return message;
-            //return parsedString[1];
-        }       
+            if (message != null)
+            {
+                parsedString = message.Split(parseChars);
+                return parsedString[1];
+            }
+            else
+            {
+                return null;
+            }
+        }
     }
 }
 

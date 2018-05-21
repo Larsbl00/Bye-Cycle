@@ -19,33 +19,27 @@ namespace Bye_Cycle
         public Parser()
         {
             communicationArduino = new CommunicationArduino();
+            finishedCommand = new string[2];
+            parsedCommand = new string[3];
         }
-        public string ParseArduinoData()
+        public string[] ParseArduinoData()
         {
             message = communicationArduino.ReadMessage();
-
-            /*
-            parsedCommand = message.Split(parseChars);
-
-            
-            if (parsedCommand[0] == "D")
+            if (message != null)
             {
-                switch (parsedCommand[1])
+                parsedCommand = message.Split(parseChars);
+                if (parsedCommand[0] == "D" && parsedCommand.Length == 3)
                 {
-                    case "direction":
-                        finishedCommand[0] = parsedCommand[1];
-                        finishedCommand[1] = parsedCommand[2];                      
-                        break;
-                    case "timeActive":
-                        finishedCommand[0] = parsedCommand[1];
-                        finishedCommand[1] = parsedCommand[2];
-                        break;
+                    finishedCommand[0] = parsedCommand[1];
+                    finishedCommand[1] = Convert.ToString(parsedCommand[2]);
                 }
-            }
 
-            return finishedCommand;
-            */
-            return message;
+                return finishedCommand;
+            }
+            else
+            {
+                return null;
+            }    
         }
     }
 }
