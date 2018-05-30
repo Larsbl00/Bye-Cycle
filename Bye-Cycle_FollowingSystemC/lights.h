@@ -6,7 +6,7 @@
 
 typedef struct{
     uint8_t location;
-    volatile uint8_t* port = NULL;
+    volatile uint8_t* port;
     unsigned long timeToBurn;
     unsigned long waitTill = LONG_MAX;
 } Lights;
@@ -49,7 +49,7 @@ void CheckLightArray(Lights* lights, byte arraySize);
 //
 //@param lights : This is the array where it needs to turn the lights on
 //@param arraySize : This is the size of the array so you don't go out of bounds
-//@param direction : This is the char that indicates the direction of the lights
+//@param direction : This is the char that indicates the direction of the lights, 'l' for left, 'r' for right and 'u' if it's unknown
 //@param timeToComplete : this is the time that needed for the user to complete the distance between one module of this program
 //
 //@return: Returns -1 if the opperation was unsuccessful else it'll return 0

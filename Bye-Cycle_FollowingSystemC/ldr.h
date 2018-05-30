@@ -9,7 +9,7 @@
 //
 //@return: Returns the average analog value of the input
 //
-int returnAverage(byte analogInput);
+int ReturnAverage(byte analogInput);
 
 //Returns if it is dark enough outside to trigger the system
 //
