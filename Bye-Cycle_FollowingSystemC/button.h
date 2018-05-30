@@ -14,9 +14,9 @@ typedef struct{
     bool isSet;
     uint8_t location;
     uint8_t state;
-    uint8_t lastState = 0;
-    volatile uint8_t* pin = NULL;
-    unsigned long lastDebounceTime = 0;
+    uint8_t lastState;
+    volatile uint8_t* pin;
+    unsigned long lastDebounceTime;
     unsigned long lastTimeActive;
 } Button;
 
@@ -38,6 +38,13 @@ Button CreateButton(uint8_t location, volatile uint8_t* addressPin, volatile uin
 //
 uint8_t ReadButton(Button* button);
 
+//Checkecks in which order the buttons were pressed, and activates the lights according to it's calculations
+//
+//@param buttons: The array of buttons to check through
+//@param arraySize: This is the size of the array so we don't go out of bounds
+//@param lights: This is the array of lights we need to turn on when the buttons were pressed
+//@param: lightsSize: This is the size of the array of lights, so we don't go out of bounds
+//
 void CheckButtonSet(Button* buttons, int arraySize, Lights* lights, int lightsSize);
 
 #endif

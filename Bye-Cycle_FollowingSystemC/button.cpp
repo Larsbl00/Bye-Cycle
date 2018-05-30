@@ -3,8 +3,11 @@
 #include "button.h"
 
 Button CreateButton(uint8_t location, volatile uint8_t* addressPin, volatile uint8_t* registerButton) {
-  if (addressPin == NULL || registerButton == NULL) return {};
   Button button;
+  button.pin = NULL;
+  if (addressPin == NULL || registerButton == NULL) return button;
+  button.lastState = 0;
+  button.lastDebounceTime = 0;
   button.pin = addressPin;
   button.location = location;
   *registerButton &= ~(1 << button.location);
@@ -39,7 +42,7 @@ void CheckButtonSet(Button* buttons, int arraySize, Lights* lights, int lightsSi
   ReadButton(&buttons[1]);
   if (buttons[0].isSet && buttons[1].isSet) {
     char directionChar;
-    long TimeToBurn = 50000 * DistanceBetweenLightPosts / DistanceBetweenButtonsInPair; //Values defined in the button.h
+    long TimeToBurn = 50000 * DistanceBetweenLightPosts / DistanceBetweenButtonsInPair;
     long difference = buttons[0].lastTimeActive - buttons[1].lastTimeActive;
     if (difference > 0) {
       //Button1 was pressed later than Button2 -> Cyclist moves left in the array
@@ -52,7 +55,10 @@ void CheckButtonSet(Button* buttons, int arraySize, Lights* lights, int lightsSi
       directionChar = 'u';
     }
     TimeToBurn = (abs(difference) * DistanceBetweenLightPosts / DistanceBetweenButtonsInPair);
+    delay(5);
     SendProtocol('D', "timeActive", TimeToBurn);
+    //Small delay to give the computer some time to process the send information
+    delay(5);
     SendProtocol('D', "direction", directionChar);
     FollowSequence(lights, lightsSize, directionChar, TimeToBurn);
     buttons[0].isSet = false;
