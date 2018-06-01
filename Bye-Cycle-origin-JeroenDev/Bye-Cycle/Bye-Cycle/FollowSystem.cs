@@ -7,18 +7,18 @@ using System.Threading.Tasks;
 
 namespace Bye_Cycle
 {
+    [Serializable]
     class FollowSystem : Data
     {
-        private Stopwatch stopwatch = new Stopwatch();
 
         private List<long> timeLightsOn = new List<long>();
 
-        public int HowManyBikes { get; private set; }
+        public int HowManyBikesOnLane { get; private set; }
 
         public int PrefferedSide { get; private set; }
 
 
-        public FollowSystem(DateTime currentDay) : base (currentDay)
+        public FollowSystem(DateTime currentDay, string name) : base(currentDay, name)
         {
 
         }
@@ -26,23 +26,9 @@ namespace Bye_Cycle
         /* This method culculates the the time the lights were on
          * this info is stored in a list, the index of the list is how many times the lights were on.
          */ 
-        public void CalculateTimeLightsOn(bool lightsOn)
+        public void AddTimeLightsOn(long Seconds)
         {
-            if (lightsOn)
-            {  
-                if (!stopwatch.IsRunning)
-                {
-                    stopwatch.Start();
-                }
-            }
-            else
-            {
-                if (stopwatch.IsRunning)
-                {
-                    timeLightsOn.Add(stopwatch.ElapsedMilliseconds / 1000);
-                    stopwatch.Stop();
-                }
-            }
+            
         }
 
         /*This method changes the prefferedside, the input is a bool True = left and false is right.
@@ -51,7 +37,7 @@ namespace Bye_Cycle
          */
         public void CalculatePreferredSide(bool side)
         {
-            HowManyBikes++;
+            HowManyBikesOnLane++;
             if (side)
             {
                 //If a bikes comes from the left.

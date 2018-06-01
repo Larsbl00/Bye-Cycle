@@ -1,140 +1,234 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
+using System.Runtime.Serialization.Formatters.Binary;
 using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
 using System.Web.Helpers;
+using System.Windows.Forms;
 
 namespace Bye_Cycle
 {
+    public enum Systems
+    {
+        FollowSystem,
+        TrafficLight
+    }
+
+    public enum Side
+    {
+        Left,
+        Right,
+        None
+        
+    }
+
     class Administration
     {
+        private List<Data> data;
 
-        public List<Data> data { get; private set; }
-        private CommunicationArduino communicationArduino;
+        private List<Data> dataForChecks;
+        public List<Data> CopyData
+        {
+            get { return new List<Data>(data); }
+        }
+
+        private long TimeLightsOn;
         private Parser parser;
-        private string command;
+        private string[] command;
+        public Systems system { get; private set; }
         public Administration()
         {
             data  = new List<Data>();
             parser = new Parser();
+
         }
 
-        public string ReadMessage()
+        public void ReadMessage()
         {
             command = parser.ParseArduinoData();
-            if (command[0] != null)
+
+            
+                        
+            if (command != null)
             {
-                return command;
+                //MessageBox.Show(command[0] + command[1]);
+                switch (command[0])
+                {
+                    case "direction":
+                        checkIfDateExist(Systems.FollowSystem);
+                        foreach (Data data in data)
+                        {
+                            FollowSystem Fdata = data as FollowSystem;
+                            if (Fdata.Date == DateTime.Today)
+                            {
+                                if (command[1] == "114")
+                                {
+                                    Fdata.CalculatePreferredSide(true);
+                                }
+                                else
+                                {
+                                    Fdata.CalculatePreferredSide(false);
+                                }
+                            }
+                        }
+                        break;
+                    case "timeActive":
+                        checkIfDateExist(Systems.FollowSystem);
+                        foreach (Data data in data)
+                        {
+                            FollowSystem Fdata = data as FollowSystem;
+                            if (Fdata.Date == DateTime.Today)
+                            {
+                                if (Int64.TryParse(command[1], out TimeLightsOn))
+                                {
+                                    Fdata.AddLightsOn(TimeLightsOn);
+                                }
+                                else
+                                {
+                                    throw new ArgumentException("Input from arduino wrong");
+                                }
+                            }
+                        }
+                        break;
+                    case "isRaining":
+                        checkIfDateExist(Systems.TrafficLight);
+                        foreach (Data data in data)
+                        {
+                            TrafficLight Tdata = data as TrafficLight;
+                            if (Tdata.Date == DateTime.Today)
+                            {
+                                Tdata.CalculateTimeRain(Convert.ToBoolean(command[1]));
+                                break;
+                            }
+                        }
+                        break;
+                }
+            }          
+        }
+
+        private void checkIfDateExist(Systems system)
+        {
+            int count = 0;
+            dataForChecks = new List<Data>(data);
+
+            if (system == Systems.FollowSystem)
+            {
+                if (data.Count == 0)
+                {
+                    data.Add(new FollowSystem(DateTime.Today, Convert.ToString(DateTime.Today) + " F"));
+                }
+                else
+                {
+                    foreach (Data data in dataForChecks)
+                    {
+                        FollowSystem Fdata = data as FollowSystem;
+                        if (Fdata != null)
+                        {
+                            if (Fdata.Name == Convert.ToString(DateTime.Today) + " F")
+                            {
+                                count ++;
+                            }
+                        }
+                    }
+
+                    if (count == 0)
+                    {
+                        this.data.Add(new FollowSystem(DateTime.Today, Convert.ToString(DateTime.Today) + " F"));
+                    }
+
+                }
+                
+            }
+            else if ( system == Systems.TrafficLight)
+            {
+                if (data.Count == 0)
+                {
+                    data.Add(new TrafficLight(DateTime.Today, Convert.ToString(DateTime.Today) + " F"));
+                }
+                else
+                {
+                    foreach (Data data in dataForChecks)
+                    {
+                        TrafficLight Fdata = data as TrafficLight;
+                        if (Fdata != null)
+                        {
+                            if (Fdata.Name == Convert.ToString(DateTime.Today) + " F")
+                            {
+                                count++;
+                            }
+                        }
+                    }
+
+                    if (count == 0)
+                    {
+                        this.data.Add(new TrafficLight(DateTime.Today, Convert.ToString(DateTime.Today) + " F"));
+                    }
+                }
+            }
+        }
+        
+
+        public void SendOnOffMessageToFollowingSystem(bool onOff)
+        {
+            if(onOff == true)
+            {
+                parser.SendMessageToArduino("%F:followOff-1#");
             }
             else
             {
-                return "Nothing found";
-            }
-            
-            /*
-            switch (command[0])
-            {
-                case "direction":
-                    checkIfDateExist();
-                    AddDirectionFollowLight(command[1]);
-                    break;
-                case "timeActive":
-                    break;
-            }
-            */
-        }
-
-        private void checkIfDateExist()
-        {
-            foreach (Data date in data)
-            {
-                if (date.Date != DateTime.Today)
-                {
-                    data.Add(new FollowSystem(DateTime.Today));
-                    data.Add(new TrafficLight(DateTime.Today));
-                }
+                parser.SendMessageToArduino("%F:followOff-0#");
             }
         }
 
-
-        //This method adds the preffered side, and counts how many cyclist used the followingsystem
-        //True = Right False is Left
-        public void AddDirectionFollowLight(string direction)
+        
+        public void DeleteData(string date)
         {
-            foreach (FollowSystem followSystem in data)
+            if(date != null)
             {
-                if (followSystem.Date == DateTime.Today)
+                for (int i = 0; i < this.data.Count; i++)
                 {
-                    if (direction == "114")
+                    if (date == this.data[i].Date.ToString("dd/MM/yyyy"))
                     {
-                        followSystem.CalculatePreferredSide(true);
+                        data.Remove(data[i]);
                     }
-                    else
-                    {
-                        followSystem.CalculatePreferredSide(false);
-                    }                
                 }
             }
         }
+        
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-        public Data AddData()
+        public void Export(string name)
         {
-            return null;
+            using (FileStream stream = File.Open(name, FileMode.Create))
+            {
+                BinaryFormatter formatter = new BinaryFormatter();
+                formatter.Serialize(stream, this.data);
+            }
         }
-
-        public Data Getdata(DateTime data)
+        
+        public void Import(string path)
         {
-            return null;
+            if (this.data.Count > 0) data.Clear();
+            using (FileStream stream = File.OpenRead(path))
+            {
+                if(stream.Length != 0)
+                {
+                    BinaryFormatter formatter = new BinaryFormatter();
+                    data = formatter.Deserialize(stream) as List<Data>;
+                }
+            }
         }
-
+        
         public void Save()
         {
-            
-        }
-
-        public void Delete()
-        {
-            
-        }
-
-        public void Backup()
-        {
-           
-        }
-
-        public void Change()
-        {
-            
+            using (FileStream stream = File.Open(AppDomain.CurrentDomain.BaseDirectory + @" DataDoNotTouch.Bye", FileMode.Create))
+            {
+                BinaryFormatter formatter = new BinaryFormatter();
+                formatter.Serialize(stream, this.data);
+                stream.Close();
+            }
         }
     }
 }

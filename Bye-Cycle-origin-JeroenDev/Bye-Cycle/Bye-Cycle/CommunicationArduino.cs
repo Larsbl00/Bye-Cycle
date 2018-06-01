@@ -16,14 +16,16 @@ namespace Bye_Cycle
         private string[] parsedString;
         private char[] parseChars = {'%', '#'};
         private string message;
+        public string DeviceName { get; private set; }
 
         private SerialPort mySerialPort = new SerialPort();
         private SerialPort spL;
 
-        public CommunicationArduino()
+        public CommunicationArduino(int baudRate, string comPort, string name)
         {
-            mySerialPort.PortName = "COM3";
-            mySerialPort.BaudRate = 38400;
+            DeviceName = name;
+            mySerialPort.PortName = comPort;
+            mySerialPort.BaudRate = baudRate;
             mySerialPort.Parity = Parity.None;
             mySerialPort.StopBits = StopBits.One;
             mySerialPort.DataBits = 8;
@@ -54,6 +56,17 @@ namespace Bye_Cycle
             {
                 return null;
             }
+        }
+
+        public void SendMessage(string message)
+        {
+            if (mySerialPort.IsOpen)
+            {
+                mySerialPort.Close();
+            }
+            mySerialPort.Open();
+            mySerialPort.WriteLine("%" + message + "#");
+            mySerialPort.Close();
         }
     }
 }
