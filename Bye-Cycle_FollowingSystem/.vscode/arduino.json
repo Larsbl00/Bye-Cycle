@@ -1,5 +1,0 @@
-{
-    "board": "arduino:avr:uno",
-    "sketch": "Bye-Cycle_FollowingSystem.ino",
-    "port": "/dev/cu.usbmodem1421"
-}

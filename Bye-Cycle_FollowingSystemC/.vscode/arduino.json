@@ -1,9 +1,0 @@
-{
-    "board": "arduino:avr:uno",
-<<<<<<< HEAD
-    "sketch": "Bye-Cycle_FollowingSystem.ino",
-=======
-    "sketch": "Bye-Cycle_FollowingSystemC.ino",
->>>>>>> LarsDev
-    "port": "/dev/cu.usbmodem1421"
-}
