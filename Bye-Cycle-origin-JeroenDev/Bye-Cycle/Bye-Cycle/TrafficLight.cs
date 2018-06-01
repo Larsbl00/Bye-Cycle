@@ -8,6 +8,7 @@ using System.Windows.Forms;
 
 namespace Bye_Cycle
 {
+    [Serializable]
     class TrafficLight : Data
     {
         private List<long> totalTimeRain;
@@ -15,9 +16,10 @@ namespace Bye_Cycle
 
         private bool isRaining;
 
+        [NonSerialized]
         private Stopwatch stopwatch = new Stopwatch();
 
-        public TrafficLight(DateTime currentDay) : base (currentDay)
+        public TrafficLight(DateTime currentDay, string name) : base (currentDay, name)
         {
             totalTimeRain =  new List<long>();
         }

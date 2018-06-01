@@ -8,16 +8,21 @@ using System.Windows.Forms;
 
 namespace Bye_Cycle
 {
+    [Serializable]
     class TrafficLight : Data
     {
         private List<long> totalTimeRain;
+
+        public List<long> TotalTimeRain
+        {
+            get { return new List<long>(totalTimeRain); }
+        }
         public int HowManyBicyclesPrioritised { get; private set; }
 
-        private bool isRaining;
-
+        [NonSerialized]
         private Stopwatch stopwatch = new Stopwatch();
 
-        public TrafficLight(DateTime currentDay) : base (currentDay)
+        public TrafficLight(DateTime currentDay, string name) : base (currentDay, name)
         {
             totalTimeRain =  new List<long>();
         }
@@ -26,7 +31,7 @@ namespace Bye_Cycle
         /* this method calculates the time it has rained, and puts this data into a list,
          * the index of the list shows how many times it has rained
          */
-        public void CalculateTimeRain()
+        public void CalculateTimeRain(bool isRaining)
         {
             if (isRaining)
             {

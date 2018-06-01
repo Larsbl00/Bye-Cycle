@@ -12,22 +12,59 @@ namespace Bye_Cycle
         private string[] parsedCommand;
         private string[] finishedCommand;
         private char[] parseChars = { ':', '-' };
+        private string MessageFromLastDevice;
         private enum commands { direction  }
 
+        private List<CommunicationArduino> Devices;
 
-        private CommunicationArduino communicationArduino;
+
+        private CommunicationArduino communicationArduinoFollowSystem;
+        private CommunicationArduino communicationArduinoTrafficLight;
         public Parser()
         {
-            communicationArduino = new CommunicationArduino();
+            MessageFromLastDevice = "FollowSystem";
+            Devices = new List<CommunicationArduino>();
+            Devices.Add(new CommunicationArduino(38400, "COM3", "FollowSystem"));
+            Devices.Add(new CommunicationArduino(9600, "COM4", "TrafficLight"));
+
             finishedCommand = new string[2];
             parsedCommand = new string[3];
         }
         public string[] ParseArduinoData()
         {
-            message = communicationArduino.ReadMessage();
-            if (message != null)
+
+
+            switch (MessageFromLastDevice)
             {
-                parsedCommand = message.Split(parseChars);
+                case "FollowSystem":
+                    foreach (CommunicationArduino Device in Devices)
+                    {
+                        if (Device.DeviceName == "TrafficLight")
+                        {
+                            //message = Device.ReadMessage();
+                        }
+                    }
+                    MessageFromLastDevice = "TrafficLight";
+                    return StringSplitter(message);
+                case "TrafficLight":
+                    foreach (CommunicationArduino Device in Devices)
+                    {
+                        if (Device.DeviceName == "FollowSystem")
+                        {
+                            message = Device.ReadMessage();
+                        }
+                    }
+                    MessageFromLastDevice = "FollowSystem";
+                    return StringSplitter(message);
+            }
+            return null;
+        }
+
+        private string[] StringSplitter(string test)
+        {
+            if (test != null)
+            {
+                parsedCommand = test.Split(parseChars);
                 if (parsedCommand[0] == "D" && parsedCommand.Length == 3)
                 {
                     finishedCommand[0] = parsedCommand[1];
@@ -39,7 +76,18 @@ namespace Bye_Cycle
             else
             {
                 return null;
-            }    
+            }
+        }
+
+        public void SendMessageToFollowingSystem(string message)
+        {
+            foreach (CommunicationArduino Device in Devices)
+            {
+                if (Device.DeviceName == "FollowSystem")
+                {
+                    Device.SendMessage(message);
+                }
+            }
         }
     }
 }
