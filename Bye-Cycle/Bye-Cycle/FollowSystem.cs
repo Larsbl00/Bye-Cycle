@@ -7,80 +7,75 @@ using System.Threading.Tasks;
 
 namespace Bye_Cycle
 {
+    enum Side
+    {
+       Unknown,
+       Left,
+       Right
+    }
+
     [Serializable]
-    class FollowSystem : Data
+    class FollowSystem
     {
         [NonSerialized]
         private Stopwatch stopwatch = new Stopwatch();
 
-        private List<string> timeLightsOn;
+        /// <summary>
+        /// Returns how many people have passed
+        /// </summary>
+        public int HowManyBikesOnLane { get => FollowSystemData.Count; }
 
-        private Side side;
+        /// <summary>
+        /// Returns the most common direction of the cyclers
+        /// </summary>
+        public Side PreferedSide { get => preferedSide(); }
 
-        public List<string> TimeLightsOn
+        /// <summary>
+        /// This is the list of all data revolving around the following system
+        /// </summary>
+        public List<FollowSystemData> FollowSystemData { get; private set; }
+
+        private Side preferedSide()
         {
-            get { return new List<string>(timeLightsOn); }
-        }
-
-        public int HowManyBikesOnLane { get; private set; }
-
-        private int PrefferedSide;
-        public Side Side { get
+            if (FollowSystemData == null || FollowSystemData.Count == 0) return Side.Unknown;
+            int sideCounter = 0;
+            foreach (FollowSystemData data in FollowSystemData)
             {
-                if (PrefferedSide == 0)
+                switch (data.Direction)
                 {
-                    return Side.None;
+                    case Side.Left:
+                        sideCounter--;
+                        break;
+                    case Side.Right:
+                        sideCounter++;
+                        break;
+                    default: break;
                 }
-                else if(PrefferedSide < 0)
-                {
-                    return Side.Left;
-                }
-                else if (PrefferedSide > 0)
-                {
-                    return Side.Right;
-                }
-                return Side.None;
-            }}
-
-
-        public FollowSystem(DateTime currentDay, string name) : base(currentDay, name)
-        {
-            timeLightsOn = new List<string>();
-        }
-
-        /* This method culculates the the time the lights were on
-         * this info is stored in a list, the index of the list is how many times the lights were on.
-         */ 
-        public void AddLightsOn(long lightsOn)
-        {
-            timeLightsOn.Add("Time=" + Math.Round((double)lightsOn/1000, 2) + "s" + ", Direction: " + side.ToString());
-        }
-
-        /*This method changes the prefferedside, the input is a bool True = left and false is right.
-         * If prefferedside is above 0 prefferedside = left if its below 0 preffered side is right.
-         * It also counts how many bikes there have been.
-         */
-        public void CalculatePreferredSide(bool side)
-        {
-            HowManyBikesOnLane++;
-            if (side)
+            }
+            if (sideCounter < 0)
             {
-                //If a bikes comes from the left.
-                PrefferedSide ++;
-                this.side = Side.Left;
+                return Side.Left;
+            }
+            else if (sideCounter > 0)
+            {
+                return Side.Right;
             }
             else
             {
-                //If a bikes comes from the right.
-                PrefferedSide --;
-                this.side = Side.Right;
+                return Side.Unknown;
             }
         }
 
-        // This method turns off the followingsystem, this makes it so that the light are always on if it is dark.
-        public void TurnOffFollowSystem()
+        /// <summary>
+        /// Creates an instance of the FollowingSystem
+        /// </summary>
+        /// <param name="buildYear"></param>
+        /// <param name="name"></param>
+        /// <param name="lastTimeActive"></param>
+        public FollowSystem(DateTime buildYear, string name, DateTime lastTimeActive)
         {
-            
+            FollowSystemData = new List<FollowSystemData>();
         }
+
     }
 }
