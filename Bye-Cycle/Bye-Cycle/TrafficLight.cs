@@ -9,59 +9,64 @@ using System.Windows.Forms;
 namespace Bye_Cycle
 {
     [Serializable]
-    class TrafficLight : Data
+    public class TrafficLight : Device
     {
-        private List<long> totalTimeRain;
+        private bool timeAdded = false;
+        private List<TrafficLightData> trafficLightData;
 
-        public List<long> TotalTimeRain
-        {
-            get { return new List<long>(totalTimeRain); }
-        }
-        public int HowManyBicyclesPrioritised { get; private set; }
+        /// <summary>
+        /// Returns how many bikes were prioritised
+        /// </summary>
+        public long BikesPrioritised { get => trafficLightData.Count; }
+
+        public List<TrafficLightData> TrafficLightData { get => new List<TrafficLightData>(trafficLightData); }
 
         [NonSerialized]
         private Stopwatch stopwatch = new Stopwatch();
 
+        /// <summary>
+        /// Creates a new instance of TrafficLight
+        /// </summary>
+        /// <param name="currentDay"></param>
+        /// <param name="name"></param>
         public TrafficLight(DateTime currentDay, string name) : base (currentDay, name)
         {
-            totalTimeRain =  new List<long>();
+            trafficLightData = new List<TrafficLightData>();
         }
 
 
-        /* this method calculates the time it has rained, and puts this data into a list,
-         * the index of the list shows how many times it has rained
-         */
+        /// <summary>
+        /// Calculates for how long it has been raining
+        /// </summary>
+        /// <param name="isRaining">Turns the timer on or off</param>
         public void CalculateTimeRain(bool isRaining)
         {
             if (isRaining)
             {
                 if (!stopwatch.IsRunning)
                 {
+                    timeAdded = false;
+                    stopwatch.Reset();
                     stopwatch.Start();
                 }
             }
             else
             {
-                if (stopwatch.IsRunning)
+                if (stopwatch.IsRunning && timeAdded == false)
                 {
-                    totalTimeRain.Add(stopwatch.ElapsedMilliseconds / 1000);
+                    trafficLightData.Add(new TrafficLightData(stopwatch.ElapsedMilliseconds));
+                    base.LastTimeActive = DateTime.Now;
                     stopwatch.Stop();
                 }
             }
         }
 
-        // This method Calculates how many bikes have been prioritised
-        public void CalculateAmountOfBikesPrioritised(int bikesPrioritised)
+        public override string ToString()
         {
-            try
-            {
-                HowManyBicyclesPrioritised = +bikesPrioritised;
-            }
-            catch (NullReferenceException)
-            {
-                HowManyBicyclesPrioritised = HowManyBicyclesPrioritised;
-            }
-            
+            return base.ToString() + ", Prioritised: " + BikesPrioritised;
         }
+
+
+
     }
 }

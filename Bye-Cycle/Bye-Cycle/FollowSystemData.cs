@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 namespace Bye_Cycle
 {
     [Serializable]
-    class FollowSystemData
+    public class FollowSystemData
     {
         public long TimeLightsOn { get; private set; }
         public Side Direction { get; private set; }
