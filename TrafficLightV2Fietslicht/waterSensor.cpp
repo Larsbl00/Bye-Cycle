@@ -34,6 +34,7 @@ void waterSensor_change_interval(int sensorValue) {
   else 
   {
     TimerInterval(standardTime);
+    SendProtocol('D',"IsRaining",0);
   }
 }
 
